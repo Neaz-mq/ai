@@ -1,6 +1,6 @@
 export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <header className="flex-grow flex items-center justify-center text-center">
         <div className="px-6">
           <h1 className="text-5xl font-extrabold mb-4">
