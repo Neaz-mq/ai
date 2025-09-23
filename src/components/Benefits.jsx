@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { motion } from "framer-motion";
 
 const Benefits = () => {
   const placeholderImages = [
@@ -15,46 +16,91 @@ const Benefits = () => {
     { src: "/Picture4.png", alt: "Simulation Icon", title: "Simulation" },
   ];
 
+  // Motion Variants
+  const containerVariant = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.2 } },
+  };
+
+  const featureVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  };
+
+  const galleryVariant = {
+    hidden: { opacity: 0, y: 50 }, // start lower
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }, // animate up
+  };
+
   return (
     <section className="py-16 bg-white text-gray-800">
       {/* Section Heading */}
-      <header className="max-w-3xl mx-auto text-center mb-14 px-4">
-        <h2 className="text-3xl md:text-4xl font-light text-gray-500">
-          Entering <span className="text-black font-bold">New</span> Worlds Beyond <span className="text-black font-bold">Imagination</span>
+      <motion.header
+        className="max-w-3xl mx-auto text-center mb-16 px-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <h2 className="text-3xl md:text-4xl font-light text-gray-700">
+          Entering <span className="text-black font-bold">New</span> Worlds Beyond{" "}
+          <span className="text-black font-bold">Imagination</span>
         </h2>
-      </header>
+        <p className="mt-4 text-gray-500">
+          Explore features that redefine virtual experiences.
+        </p>
+      </motion.header>
 
       {/* Features Grid */}
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <motion.div
+        className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+        variants={containerVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {features.map((feature, index) => (
-          <article
+          <motion.article
             key={index}
-            className="bg-[#65D800] rounded-3xl p-6 flex flex-col items-center justify-center text-white text-center h-52 transition-transform hover:scale-105"
+            className="bg-[#65D800] rounded-3xl p-6 flex flex-col items-center justify-center text-white text-center h-64 md:h-56 lg:h-52 shadow-lg hover:shadow-2xl cursor-pointer"
+            variants={featureVariant}
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            aria-label={feature.title}
           >
             <img
               src={feature.src}
               alt={feature.alt}
-              className="h-14 w-14 mb-4"
+              className="h-16 w-16 mb-4 object-contain"
               loading="lazy"
             />
-            <h3 className="text-xl font-semibold">{feature.title}</h3>
-          </article>
+            <h3 className="text-xl md:text-lg font-semibold">{feature.title}</h3>
+          </motion.article>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Image Gallery */}
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Image Gallery (slide up animation) */}
+      <motion.div
+        className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        variants={containerVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {placeholderImages.map((image, index) => (
-          <figure key={index} className="overflow-hidden rounded-3xl">
+          <motion.figure
+            key={index}
+            className="overflow-hidden rounded-3xl shadow-md hover:shadow-xl cursor-pointer"
+            variants={galleryVariant}
+            whileHover={{ scale: 1.05 }}
+          >
             <img
               src={image.src}
               alt={image.alt}
-              className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+              className="w-full h-64 md:h-56 lg:h-48 object-cover transition-transform duration-300"
               loading="lazy"
             />
-          </figure>
+          </motion.figure>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function Loader({ setLoading }) {
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200); // Fast loading duration
+    const timer = setTimeout(() => setLoading(false), 800); // Fast loading duration
     return () => clearTimeout(timer);
   }, [setLoading]);
 
