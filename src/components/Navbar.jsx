@@ -71,7 +71,7 @@ const Navbar = () => {
           {/* Contact Button (desktop only) */}
           <div className="hidden lg:flex absolute right-6">
             <button
-              className="px-6 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer hover:bg-gray-700"
+              className="px-6 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer "
               aria-label="Contact"
             >
               Contact
@@ -171,7 +171,7 @@ const Navbar = () => {
           </Link>
           {/* Smaller Contact button */}
           <button
-            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer hover:bg-gray-700"
+            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer "
             onClick={() => setIsMenuOpen(false)}
           >
             Contact
