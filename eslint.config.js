@@ -23,7 +23,11 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Ignore unused variables that start with uppercase letters (like React components or motion)
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]|^motion$' }],
+
+      // Optional: you can also ignore variables named 'motion' explicitly
+      // 'no-unused-vars': ['error', { varsIgnorePattern: '^(motion)$' }],
     },
   },
 ])
