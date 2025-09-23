@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const Hero = () => {
   return (
     <section
-      className="relative w-full h-screen flex items-start justify-center bg-white overflow-hidden pt-10"
+      className="relative w-full  flex items-start justify-center bg-white overflow-hidden pt-14 pb-32"
       role="banner"
       aria-label="Artificial Intelligence Hero Section"
     >
@@ -53,7 +53,7 @@ const Hero = () => {
             </motion.span>
             {/* Decorative underline */}
             <motion.span
-              className="absolute -bottom-2 left-0 w-full h-1 bg-[#65D800] rounded-full blur-sm opacity-70"
+              className="absolute -bottom-10 left-0 w-full h-1 bg-[#65D800] rounded-full blur-sm opacity-70"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 1 }}

@@ -3,6 +3,7 @@ import Lenis from "@studio-freight/lenis";
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Benefits from "./components/Benefits";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -40,6 +41,7 @@ export default function App() {
           <Navbar />
           <main>
             <Hero />
+            <Benefits />
           </main>
         </div>
       )}
