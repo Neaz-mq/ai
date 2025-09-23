@@ -4,6 +4,7 @@ import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Benefits from "./components/Benefits";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,7 @@ export default function App() {
             <Hero />
             <Benefits />
           </main>
+           <ScrollToTop />
         </div>
       )}
     </>
