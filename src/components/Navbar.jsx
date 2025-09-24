@@ -10,7 +10,7 @@ const Navbar = () => {
     <header className="w-full">
       <div className="flex flex-col items-center p-4 sm:p-8 -mb-2">
         <nav
-          className="w-full max-w-7xl flex items-center justify-between bg-gray-800 rounded-full relative"
+          className="w-full  flex items-center justify-between bg-gray-800 rounded-full relative"
           role="navigation"
           aria-label="Main Navigation"
         >
@@ -24,6 +24,15 @@ const Navbar = () => {
               className="cursor-pointer text-white hover:text-[#65D800] transition-colors duration-200"
             >
               Home
+            </Link>
+              <Link
+              to="benefits"
+              smooth={true}
+              offset={-80}
+              duration={500}
+              className="cursor-pointer text-white hover:text-[#65D800] transition-colors duration-200"
+            >
+              Benefits
             </Link>
             <Link
               to="works"
@@ -138,6 +147,16 @@ const Navbar = () => {
             className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
           >
             Home
+          </Link>
+           <Link
+            to="benefits"
+            smooth={true}
+            offset={-80}
+            duration={500}
+            onClick={() => setIsMenuOpen(false)}
+            className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
+          >
+            Benefits
           </Link>
           <Link
             to="works"
