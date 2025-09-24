@@ -4,16 +4,29 @@ import { FaDownload, FaBrain, FaChartLine, FaArrowUp } from "react-icons/fa";
 const Works = () => {
   const cardVariant = {
     hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   const bottomVariant = {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.7, ease: "easeOut" },
+    },
   };
 
   return (
-    <section className="w-full bg-white text-gray-800 py-12 md:py-20" aria-labelledby="works-heading">
+    <section
+      className="w-full bg-white text-gray-800 py-12 md:py-20"
+      aria-labelledby="works-heading"
+    >
       {/* Heading */}
       <header className="text-center mb-12 px-4">
         <motion.h2
@@ -38,11 +51,14 @@ const Works = () => {
       >
         {/* Stats Card */}
         <motion.article
-          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-6 flex flex-col justify-center h-[30vh] sm:h-[35vh] lg:h-[32vh]"
+          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-6 flex flex-col justify-center
+             h-[48vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vh] xl:h-[40vh]"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -5 }}
         >
-          <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-4">260K+</h3>
+          <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-4">
+            260K+
+          </h3>
           <p className="text-gray-600 text-sm sm:text-base mb-4">
             Daily AI-powered interactions
           </p>
@@ -86,7 +102,11 @@ const Works = () => {
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -5 }}
         >
-          <img src="/learning.png" alt="Learning Icon" className="w-12 h-12 mb-3" />
+          <img
+            src="/learning.png"
+            alt="Learning Icon"
+            className="w-12 h-12 mb-3"
+          />
           <h4 className="text-lg font-medium">Learning</h4>
         </motion.article>
 
@@ -96,8 +116,14 @@ const Works = () => {
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -5 }}
         >
-          <img src="/pattern.png" alt="Pattern Icon" className="w-12 h-12 mb-3" />
-          <h4 className="text-lg font-medium text-center">Pattern & Prediction</h4>
+          <img
+            src="/pattern.png"
+            alt="Pattern Icon"
+            className="w-12 h-12 mb-3"
+          />
+          <h4 className="text-lg font-medium text-center">
+            Pattern & Prediction
+          </h4>
         </motion.article>
 
         {/* Output Card */}
@@ -138,7 +164,10 @@ const Works = () => {
           variants={bottomVariant}
           whileHover={{ scale: 1.03, y: -5 }}
         >
-          <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/dxohwanal/image/upload/v1758709479/Picture3_wlfer9.jpg')] bg-cover bg-center" aria-hidden="true"></div>
+          <div
+            className="absolute inset-0 bg-[url('https://res.cloudinary.com/dxohwanal/image/upload/v1758709479/Picture3_wlfer9.jpg')] bg-cover bg-center"
+            aria-hidden="true"
+          ></div>
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative z-10 flex flex-col items-center justify-center gap-4 h-full p-4">
             <div className="flex space-x-4">
@@ -152,7 +181,11 @@ const Works = () => {
                   className="w-12 h-12 rounded-full flex items-center justify-center p-0.5 bg-[#65D800]"
                 >
                   <div className="w-full h-full rounded-full bg-[#1A3635] flex items-center justify-center">
-                    <img src={icon.src} alt={icon.alt} className="w-6 h-6 object-contain" />
+                    <img
+                      src={icon.src}
+                      alt={icon.alt}
+                      className="w-6 h-6 object-contain"
+                    />
                   </div>
                 </div>
               ))}
