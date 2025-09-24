@@ -3,59 +3,43 @@ import { motion } from "framer-motion";
 const Hero = () => {
   return (
     <section
-      className="relative w-full flex flex-col items-center justify-center bg-white overflow-hidden py-14"
+      className="relative w-full flex flex-col items-center justify-center overflow-hidden py-4"
       role="banner"
       aria-label="Artificial Intelligence Hero Section"
     >
-      {/* Large Background Text for 'Artificial' */}
-      <motion.h1
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 0.2, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="absolute top-1/8 w-full text-[18vw] sm:text-[16vw] md:text-[22vw] font-extrabold text-[#65D800] z-0 select-none leading-none text-center"
-      >
-        Artificial
-      </motion.h1>
+      {/* Background "ARTIFICIAL" text */}
+      <h1 className="absolute top-0  w-full text-center text-[12vw] md:text-[16vw] lg:text-[17vw] font-bold text-[#65D800] uppercase opacity-30 select-none pointer-events-none">
+        ARTIFICIAL
+      </h1>
 
-      {/* Foreground Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full">
+      {/* Foreground content */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 sm:px-6 lg:px-12 pointer-events-none">
         {/* VR Image */}
         <motion.img
           src="https://res.cloudinary.com/dxohwanal/image/upload/v1758618654/1_xrlp0v.png"
           alt="Person wearing VR headset"
-          className="w-full max-w-6xl object-contain drop-shadow-xl"
+          className="w-[50vw] md:w-[52vw] lg:w-[57vw] object-contain drop-shadow-xl"
           loading="lazy"
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
         />
 
-        {/* 'Intelligence' Text */}
+        {/* "Intelligence" text moved higher above the image */}
         <motion.h2
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-          className="w-full text-center text-[12vw] sm:text-[10vw] md:text-[14vw] font-extrabold text-[#26440c] tracking-tight mt-[-19rem] relative"
+          className="w-full text-center text-[8vw]  md:text-[14vw] font-extrabold text-transparent tracking-tight md:mt-[-9vw] mt-[-5vw] relative"
         >
-          <span className="relative inline-block w-full">
-            <motion.span
-              className="bg-gradient-to-r from-[#65D800] via-[#3a6f0d] to-[#26440c] bg-clip-text text-transparent inline-block bg-[length:200%_auto]"
-              initial={{ backgroundPosition: "200% center" }}
-              animate={{ backgroundPosition: "0% center" }}
-              transition={{ duration: 2, ease: "linear" }}
-            >
-              Intelligence
-            </motion.span>
-
-            {/* Decorative underline */}
-            <motion.span
-              className="absolute bottom-0 left-0 w-full h-1 bg-[#65D800] rounded-full blur-sm opacity-60"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-              aria-hidden="true"
-            ></motion.span>
-          </span>
+          <motion.span
+            className="bg-gradient-to-r from-[#65D800] via-[#3a6f0d] to-[#26440c] bg-clip-text inline-block bg-[length:200%_auto]"
+            initial={{ backgroundPosition: "200% center" }}
+            animate={{ backgroundPosition: "0% center" }}
+            transition={{ duration: 2, ease: "linear" }}
+          >
+            Intelligence
+          </motion.span>
         </motion.h2>
       </div>
     </section>
