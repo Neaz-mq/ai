@@ -95,7 +95,7 @@ const Benefits = () => {
         {placeholderImages.map((image, index) => (
           <motion.figure
             key={index}
-            className="overflow-hidden rounded-3xl shadow-md hover:shadow-xl cursor-pointer h-[30vh] "
+            className="overflow-hidden rounded-3xl  hover:shadow-xl cursor-pointer h-[30vh] "
             variants={galleryVariant}
             whileHover={{ scale: 1.05 }}
           >
