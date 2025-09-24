@@ -32,7 +32,7 @@ const Benefits = () => {
 
   return (
     <section
-      className="w-full bg-white text-gray-800 md:py-16 py-8"
+      className="w-full bg-white text-gray-800 md:py-16 py-4"
       aria-labelledby="benefits-heading"
     >
       {/* Section Heading */}
@@ -65,7 +65,7 @@ const Benefits = () => {
         {features.map((feature, index) => (
           <motion.article
             key={index}
-            className="bg-[#65D800] rounded-3xl flex flex-col items-center justify-center text-white text-center shadow-lg hover:shadow-2xl cursor-pointer h-[25vh] md:h-[20vh]"
+            className="bg-[#65D800] rounded-3xl flex flex-col items-center justify-center text-white text-center shadow-lg hover:shadow-2xl cursor-pointer h-[30vh] "
             variants={featureVariant}
             whileHover={{ scale: 1.05, rotate: 1 }}
             aria-label={feature.title}
@@ -95,7 +95,7 @@ const Benefits = () => {
         {placeholderImages.map((image, index) => (
           <motion.figure
             key={index}
-            className="overflow-hidden rounded-3xl shadow-md hover:shadow-xl cursor-pointer h-[25vh] md:h-[20vh]"
+            className="overflow-hidden rounded-3xl shadow-md hover:shadow-xl cursor-pointer h-[30vh] "
             variants={galleryVariant}
             whileHover={{ scale: 1.05 }}
           >

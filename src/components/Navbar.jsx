@@ -8,9 +8,9 @@ const Navbar = () => {
 
   return (
     <header className="w-full">
-      <div className="flex flex-col items-center p-4 sm:p-8 -mb-2">
+      <div className="flex flex-col items-center p-2 sm:p-4 md:p-8 -mb-2">
         <nav
-          className="w-full  flex items-center justify-between bg-gray-800 rounded-full relative md:py-2 py-0"
+          className="w-full flex items-center justify-between bg-gray-800 rounded-full relative py-0 md:py-2"
           role="navigation"
           aria-label="Main Navigation"
         >
@@ -25,7 +25,7 @@ const Navbar = () => {
             >
               Home
             </Link>
-              <Link
+            <Link
               to="benefits"
               smooth={true}
               offset={-80}
@@ -50,7 +50,7 @@ const Navbar = () => {
             <img
               src="/logo.png"
               alt="AI Logo"
-              className="h-20 w-20 rounded-full"
+              className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
               loading="lazy"
             />
           </div>
@@ -80,7 +80,7 @@ const Navbar = () => {
           {/* Contact Button (desktop only) */}
           <div className="hidden lg:flex absolute right-6">
             <button
-              className="px-6 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer "
+              className="px-6 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer"
               aria-label="Contact"
             >
               Contact
@@ -148,7 +148,7 @@ const Navbar = () => {
           >
             Home
           </Link>
-           <Link
+          <Link
             to="benefits"
             smooth={true}
             offset={-80}
@@ -190,7 +190,7 @@ const Navbar = () => {
           </Link>
           {/* Smaller Contact button */}
           <button
-            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer "
+            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer"
             onClick={() => setIsMenuOpen(false)}
           >
             Contact
