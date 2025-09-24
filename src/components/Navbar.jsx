@@ -134,7 +134,7 @@ const Navbar = () => {
 
         {/* Mobile/Tablet Dropdown Menu */}
         <div
-          className={`w-full max-w-7xl flex-col items-center bg-white shadow-lg rounded-xl mt-4 p-4 lg:hidden ${
+          className={`w-full max-w-6xl flex-col items-center bg-white shadow-md rounded-xl mt-4 p-4 lg:hidden ${
             isMenuOpen ? "flex" : "hidden"
           }`}
         >
