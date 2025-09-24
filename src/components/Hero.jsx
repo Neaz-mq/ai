@@ -8,7 +8,7 @@ const Hero = () => {
       aria-label="Artificial Intelligence Hero Section"
     >
       {/* Background "ARTIFICIAL" text */}
-      <h1 className="absolute top-0  w-full text-center text-[12vw] md:text-[16vw] lg:text-[17vw] font-bold text-[#65D800] uppercase opacity-30 select-none pointer-events-none">
+      <h1 className="absolute top-0  w-full text-center text-[14vw] md:text-[17vw]  font-bold text-[#65D800] uppercase opacity-30 select-none pointer-events-none">
         ARTIFICIAL
       </h1>
 
@@ -18,7 +18,7 @@ const Hero = () => {
         <motion.img
           src="https://res.cloudinary.com/dxohwanal/image/upload/v1758618654/1_xrlp0v.png"
           alt="Person wearing VR headset"
-          className="w-[50vw] md:w-[52vw] lg:w-[57vw] object-contain drop-shadow-xl"
+          className="w-[54vw] md:w-[54vw] lg:w-[56vw] object-contain drop-shadow-xl"
           loading="lazy"
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}

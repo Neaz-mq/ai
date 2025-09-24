@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 
 const Benefits = () => {
@@ -16,7 +15,6 @@ const Benefits = () => {
     { src: "/Picture4.png", alt: "Simulation Icon", title: "Simulation" },
   ];
 
-  // Motion Variants
   const containerVariant = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.2 } },
@@ -28,20 +26,26 @@ const Benefits = () => {
   };
 
   const galleryVariant = {
-    hidden: { opacity: 0, y: 50 }, // start lower
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }, // animate up
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
   };
 
   return (
-    <section className="py-16 bg-white text-gray-800">
+    <section
+      className="w-full bg-white text-gray-800 md:py-16 py-8"
+      aria-labelledby="benefits-heading"
+    >
       {/* Section Heading */}
       <motion.header
-        className="max-w-3xl mx-auto text-center mb-16 px-4"
+        className="text-center mb-16 px-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h2 className="text-3xl md:text-4xl font-light text-gray-700">
+        <h2
+          id="benefits-heading"
+          className="text-3xl md:text-4xl font-light text-gray-700"
+        >
           Entering <span className="text-black font-bold">New</span> Worlds Beyond{" "}
           <span className="text-black font-bold">Imagination</span>
         </h2>
@@ -52,7 +56,7 @@ const Benefits = () => {
 
       {/* Features Grid */}
       <motion.div
-        className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+        className="w-full px-4 md:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
         variants={containerVariant}
         initial="hidden"
         whileInView="visible"
@@ -61,25 +65,28 @@ const Benefits = () => {
         {features.map((feature, index) => (
           <motion.article
             key={index}
-            className="bg-[#65D800] rounded-3xl p-6 flex flex-col items-center justify-center text-white text-center h-64 md:h-56 lg:h-52 shadow-lg hover:shadow-2xl cursor-pointer"
+            className="bg-[#65D800] rounded-3xl flex flex-col items-center justify-center text-white text-center shadow-lg hover:shadow-2xl cursor-pointer h-[25vh] md:h-[20vh]"
             variants={featureVariant}
             whileHover={{ scale: 1.05, rotate: 1 }}
             aria-label={feature.title}
+            role="region"
           >
             <img
               src={feature.src}
               alt={feature.alt}
               className="h-16 w-16 mb-4 object-contain"
               loading="lazy"
+              width={64}
+              height={64}
             />
             <h3 className="text-xl md:text-lg font-semibold">{feature.title}</h3>
           </motion.article>
         ))}
       </motion.div>
 
-      {/* Image Gallery (slide up animation) */}
+      {/* Image Gallery */}
       <motion.div
-        className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="w-full px-4 md:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         variants={containerVariant}
         initial="hidden"
         whileInView="visible"
@@ -88,15 +95,17 @@ const Benefits = () => {
         {placeholderImages.map((image, index) => (
           <motion.figure
             key={index}
-            className="overflow-hidden rounded-3xl shadow-md hover:shadow-xl cursor-pointer"
+            className="overflow-hidden rounded-3xl shadow-md hover:shadow-xl cursor-pointer h-[25vh] md:h-[20vh]"
             variants={galleryVariant}
             whileHover={{ scale: 1.05 }}
           >
             <img
               src={image.src}
               alt={image.alt}
-              className="w-full h-64 md:h-56 lg:h-48 object-cover transition-transform duration-300"
+              className="w-full h-full object-cover transition-transform duration-300"
               loading="lazy"
+              width={400}
+              height={300}
             />
           </motion.figure>
         ))}

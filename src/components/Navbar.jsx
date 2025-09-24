@@ -10,7 +10,7 @@ const Navbar = () => {
     <header className="w-full">
       <div className="flex flex-col items-center p-4 sm:p-8 -mb-2">
         <nav
-          className="w-full  flex items-center justify-between bg-gray-800 rounded-full relative"
+          className="w-full  flex items-center justify-between bg-gray-800 rounded-full relative md:py-2 py-0"
           role="navigation"
           aria-label="Main Navigation"
         >
@@ -50,7 +50,7 @@ const Navbar = () => {
             <img
               src="/logo.png"
               alt="AI Logo"
-              className="h-16 w-16 rounded-full"
+              className="h-20 w-20 rounded-full"
               loading="lazy"
             />
           </div>
