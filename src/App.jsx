@@ -43,8 +43,8 @@ export default function App() {
           <Navbar />
           <main>
             <Hero />
-            {/* <Benefits />
-            <Works /> */}
+            <Benefits />
+            {/* <Works /> */}
           </main>
            <ScrollToTop />
         </div>
