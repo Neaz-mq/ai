@@ -10,7 +10,7 @@ const Navbar = () => {
     <header className="w-full">
       <div className="flex flex-col items-center p-2 sm:p-4 md:p-8 -mb-2">
         <nav
-          className="w-full flex items-center justify-between bg-gray-800 rounded-full relative py-0 md:py-2"
+          className="w-full flex items-center justify-between bg-gray-800 rounded-full relative py-0 sm:py-0 md:py-0 lg:py-0 xl:py-0 2xl:py-2"
           role="navigation"
           aria-label="Main Navigation"
         >
