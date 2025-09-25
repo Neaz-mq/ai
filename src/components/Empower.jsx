@@ -31,7 +31,7 @@ const Empower = () => {
       <header className="text-center mb-16 px-4">
         <motion.h2
           id="empowerai-heading"
-          className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extrabold text-gray-900 leading-snug"
+          className="text-xl 2xl:text-5xl xl:text-3xl lg:text-3xl md:text-2xl font-extrabold text-gray-900 leading-snug"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
