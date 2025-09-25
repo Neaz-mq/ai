@@ -58,13 +58,13 @@ const Navbar = () => {
           {/* Right Menu (desktop only) */}
           <div className="hidden lg:flex items-center space-x-10 absolute right-40 font-semibold">
             <Link
-              to="features"
+              to="empower"
               smooth={true}
               offset={-80}
               duration={500}
               className="cursor-pointer text-white hover:text-[#65D800] transition-colors duration-200"
             >
-              Features
+              EmpowerAI
             </Link>
             <Link
               to="integration"
@@ -169,14 +169,14 @@ const Navbar = () => {
             How It Works
           </Link>
           <Link
-            to="features"
+            to="empower"
             smooth={true}
             offset={-80}
             duration={500}
             onClick={() => setIsMenuOpen(false)}
             className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
           >
-            Features
+            EmpowerAI
           </Link>
           <Link
             to="integration"

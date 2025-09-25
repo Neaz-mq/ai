@@ -96,7 +96,7 @@ const Works = () => {
                   alt=""
                   className="w-3 h-3 flex-shrink-0"
                 />
-                Emotion-aware
+                Context-aware predictions
               </div>
               <div className="flex items-center gap-2 break-words">
                 <img
@@ -104,7 +104,7 @@ const Works = () => {
                   alt=""
                   className="w-3 h-3 flex-shrink-0"
                 />
-                Context-aware
+                Context-aware predictions
               </div>
             </div>
           </div>
