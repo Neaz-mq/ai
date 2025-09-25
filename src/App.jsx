@@ -44,7 +44,7 @@ export default function App() {
           <main>
             <Hero />
             <Benefits />
-            {/* <Works /> */}
+            <Works />
           </main>
            <ScrollToTop />
         </div>

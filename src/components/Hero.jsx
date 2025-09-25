@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const Hero = () => {
   return (
     <section
-      className="relative w-full flex flex-col items-center justify-center overflow-hidden py-4"
+      className="relative w-full flex flex-col items-center justify-center overflow-hidden py-4 "
       role="banner"
       aria-label="Artificial Intelligence Hero Section"
     >
