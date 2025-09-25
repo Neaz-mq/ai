@@ -23,6 +23,7 @@ const Works = () => {
 
   return (
     <section
+      id="works"
       className="w-full bg-white text-gray-800 py-12 md:py-20"
       aria-labelledby="works-heading"
     >
@@ -66,33 +67,47 @@ const Works = () => {
           </div>
 
           {/* Points grid */}
-        <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm text-gray-600 w-full">
-  {/* Left column */}
-  <div className="flex flex-col space-y-2 sm:space-y-3 items-start">
-    <div className="flex items-center gap-2 break-words">
-      <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
-      Human-like chat
-    </div>
-    <div className="flex items-center gap-2 break-words">
-      <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
-      Real-time translation
-    </div>
-  </div>
+          <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm text-gray-600 w-full">
+            {/* Left column */}
+            <div className="flex flex-col space-y-2 sm:space-y-3 items-start">
+              <div className="flex items-center gap-2 break-words">
+                <img
+                  src="/arrow.png"
+                  alt=""
+                  className="w-3 h-3 flex-shrink-0"
+                />
+                Human-like chat
+              </div>
+              <div className="flex items-center gap-2 break-words">
+                <img
+                  src="/arrow.png"
+                  alt=""
+                  className="w-3 h-3 flex-shrink-0"
+                />
+                Real-time translation
+              </div>
+            </div>
 
-  {/* Right column */}
- <div className="flex flex-col space-y-2 sm:space-y-3 items-end">
-  <div className="flex items-center gap-2 break-words">
-    <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
-    Context-aware predictions
-  </div>
-  <div className="flex items-center gap-2 break-words">
-    <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
-    Context-aware predictions
-  </div>
-</div>
-</div>
-
-
+            {/* Right column */}
+            <div className="flex flex-col space-y-2 sm:space-y-3 items-end">
+              <div className="flex items-center gap-2 break-words">
+                <img
+                  src="/arrow.png"
+                  alt=""
+                  className="w-3 h-3 flex-shrink-0"
+                />
+                Emotion-aware
+              </div>
+              <div className="flex items-center gap-2 break-words">
+                <img
+                  src="/arrow.png"
+                  alt=""
+                  className="w-3 h-3 flex-shrink-0"
+                />
+                Context-aware
+              </div>
+            </div>
+          </div>
         </motion.article>
 
         {/* Input Card */}

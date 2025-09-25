@@ -59,7 +59,7 @@ const Benefits = () => {
   };
 
   return (
-    <section
+    <section id="benefits"
       className="w-full bg-white text-gray-800 py-4 md:py-16"
       aria-labelledby="benefits-heading"
     >
