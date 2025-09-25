@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { FaDownload, FaBrain, FaChartLine, FaArrowUp } from "react-icons/fa";
 
 const Works = () => {
   const cardVariant = {
@@ -18,7 +17,7 @@ const Works = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.7, ease: "easeOut" },
+      transition: { duration: 0.8, ease: "easeOut" },
     },
   };
 
@@ -27,11 +26,11 @@ const Works = () => {
       className="w-full bg-white text-gray-800 py-12 md:py-20"
       aria-labelledby="works-heading"
     >
-      {/* Heading */}
+      {/* Section Heading */}
       <header className="text-center mb-12 px-4">
         <motion.h2
           id="works-heading"
-          className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 leading-snug"
+          className="text-xl 2xl:text-5xl xl:text-3xl lg:text-3xl md:text-2xl font-semibold text-gray-800 leading-snug 2xl:pb-6 xl:pb-4 lg:pb-3 md:pb-2 pb-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -44,42 +43,58 @@ const Works = () => {
 
       {/* Top Grid */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6 px-4 md:px-12 mb-12"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4 px-4 md:px-12 mb-12"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
         {/* Stats Card */}
         <motion.article
-          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-6 flex flex-col justify-center
-             h-[48vh] sm:h-[50vh] md:h-[45vh] lg:h-[42vh] xl:h-[40vh]"
+          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-3 flex flex-col justify-center h-[28vh]"
           variants={cardVariant}
-          whileHover={{ scale: 1.05, y: -5 }}
+          whileHover={{ scale: 1.05, y: -3 }}
+          aria-label="Daily AI-powered interactions"
         >
-          <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-4">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             260K+
           </h3>
-          <p className="text-gray-600 text-sm sm:text-base mb-4">
+          <p className="text-gray-600 text-xs sm:text-sm mb-2">
             Daily AI-powered interactions
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 text-sm text-gray-600">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <img src="/arrow.png" alt="Arrow icon" className="w-4 h-4" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 text-xs sm:text-sm text-gray-600">
+            <div className="space-y-1">
+              <div className="flex items-center gap-1">
+                <img
+                  src="/arrow.png"
+                  alt="Arrow icon for Human-like conversation flow"
+                  className="w-3 h-3"
+                />
                 Human-like conversation flow
               </div>
-              <div className="flex items-center gap-2">
-                <img src="/arrow.png" alt="Arrow icon" className="w-4 h-4" />
+              <div className="flex items-center gap-1">
+                <img
+                  src="/arrow.png"
+                  alt="Arrow icon for Real-time language translation"
+                  className="w-3 h-3"
+                />
                 Real-time language translation
               </div>
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <img src="/arrow.png" alt="Arrow icon" className="w-4 h-4" />
+            <div className="space-y-1">
+              <div className="flex items-center gap-1">
+                <img
+                  src="/arrow.png"
+                  alt="Arrow icon for Context-aware predictions"
+                  className="w-3 h-3"
+                />
                 Context-aware predictions
               </div>
-              <div className="flex items-center gap-2">
-                <img src="/arrow.png" alt="Arrow icon" className="w-4 h-4" />
+              <div className="flex items-center gap-1">
+                <img
+                  src="/arrow.png"
+                  alt="Arrow icon for Emotion detection & sentiment analysis"
+                  className="w-3 h-3"
+                />
                 Emotion detection & sentiment analysis
               </div>
             </div>
@@ -88,52 +103,48 @@ const Works = () => {
 
         {/* Input Card */}
         <motion.article
-          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-6 h-[25vh] sm:h-[30vh] lg:h-[32vh]"
+          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
           variants={cardVariant}
-          whileHover={{ scale: 1.05, y: -5 }}
+          whileHover={{ scale: 1.05, y: -3 }}
+          aria-label="Input process"
         >
-          <img src="/input.png" alt="Input Icon" className="w-12 h-12 mb-3" />
-          <h4 className="text-lg font-medium">Input</h4>
+          <img src="/input.png" alt="Input Icon" className="w-8 h-8 mb-1" />
+          <h4 className="text-sm sm:text-base font-medium">Input</h4>
         </motion.article>
 
         {/* Learning Card */}
         <motion.article
-          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-6 h-[25vh] sm:h-[30vh] lg:h-[32vh]"
+          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
           variants={cardVariant}
-          whileHover={{ scale: 1.05, y: -5 }}
+          whileHover={{ scale: 1.05, y: -3 }}
+          aria-label="Learning process"
         >
-          <img
-            src="/learning.png"
-            alt="Learning Icon"
-            className="w-12 h-12 mb-3"
-          />
-          <h4 className="text-lg font-medium">Learning</h4>
+          <img src="/learning.png" alt="Learning Icon" className="w-8 h-8 mb-1" />
+          <h4 className="text-sm sm:text-base font-medium">Learning</h4>
         </motion.article>
 
         {/* Pattern Card */}
         <motion.article
-          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-6 h-[25vh] sm:h-[30vh] lg:h-[32vh]"
+          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
           variants={cardVariant}
-          whileHover={{ scale: 1.05, y: -5 }}
+          whileHover={{ scale: 1.05, y: -3 }}
+          aria-label="Pattern recognition and prediction"
         >
-          <img
-            src="/pattern.png"
-            alt="Pattern Icon"
-            className="w-12 h-12 mb-3"
-          />
-          <h4 className="text-lg font-medium text-center">
+          <img src="/pattern.png" alt="Pattern Icon" className="w-8 h-8 mb-1" />
+          <h4 className="text-sm sm:text-base font-medium text-center">
             Pattern & Prediction
           </h4>
         </motion.article>
 
         {/* Output Card */}
         <motion.article
-          className="rounded-2xl bg-gray-900 text-white shadow-md flex flex-col items-center justify-center p-6 h-[25vh] sm:h-[30vh] lg:h-[32vh]"
+          className="rounded-2xl bg-gray-900 text-white shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
           variants={cardVariant}
-          whileHover={{ scale: 1.05, y: -5 }}
+          whileHover={{ scale: 1.05, y: -3 }}
+          aria-label="Output results"
         >
-          <img src="/output.png" alt="Output Icon" className="w-12 h-12 mb-3" />
-          <h4 className="text-lg font-medium">Output</h4>
+          <img src="/output.png" alt="Output Icon" className="w-8 h-8 mb-1" />
+          <h4 className="text-sm sm:text-base font-medium">Output</h4>
         </motion.article>
       </motion.div>
 
@@ -143,12 +154,20 @@ const Works = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.15 } },
+        }}
       >
         {/* Left Image Card */}
         <motion.article
           className="relative md:col-span-2 rounded-2xl overflow-hidden shadow-lg h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-[30vh]"
-          variants={bottomVariant}
-          whileHover={{ scale: 1.03, y: -5 }}
+          variants={bottomVariant} // now used
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          whileHover={{ scale: 1.03, y: -5, transition: { duration: 0.3 } }}
+          aria-label="AI data visualization"
         >
           <img
             src="https://res.cloudinary.com/dxohwanal/image/upload/v1758709005/Picture2_xnfqvo.jpg"
@@ -161,8 +180,12 @@ const Works = () => {
         {/* Right AI Apps Card */}
         <motion.article
           className="relative rounded-2xl overflow-hidden shadow-lg h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-[30vh]"
-          variants={bottomVariant}
-          whileHover={{ scale: 1.03, y: -5 }}
+          variants={bottomVariant} // now used
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          whileHover={{ scale: 1.03, y: -5, transition: { duration: 0.3 } }}
+          aria-label="Popular AI Apps"
         >
           <div
             className="absolute inset-0 bg-[url('https://res.cloudinary.com/dxohwanal/image/upload/v1758709479/Picture3_wlfer9.jpg')] bg-cover bg-center"
@@ -176,9 +199,11 @@ const Works = () => {
                 { src: "/panda.png", alt: "Panda AI Logo" },
                 { src: "/star.png", alt: "Star AI Logo" },
               ].map((icon, i) => (
-                <div
+                <motion.div
                   key={i}
                   className="w-12 h-12 rounded-full flex items-center justify-center p-0.5 bg-[#65D800]"
+                  whileHover={{ y: -5, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 120, damping: 10 }}
                 >
                   <div className="w-full h-full rounded-full bg-[#1A3635] flex items-center justify-center">
                     <img
@@ -187,12 +212,17 @@ const Works = () => {
                       className="w-6 h-6 object-contain"
                     />
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-            <p className="text-white text-center font-medium text-sm sm:text-base">
+            <motion.p
+              className="text-white text-center font-medium text-sm sm:text-base"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               World Most Popular AI Apps
-            </p>
+            </motion.p>
           </div>
         </motion.article>
       </motion.div>
