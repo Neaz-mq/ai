@@ -8,7 +8,7 @@ const Hero = () => {
       aria-label="Artificial Intelligence Hero Section"
     >
       {/* Background "ARTIFICIAL" text */}
-      <h1 className="absolute top-0  w-full text-center text-[14vw] md:text-[17vw]  font-bold text-[#65D800] uppercase opacity-30 select-none pointer-events-none">
+      <h1 className="absolute top-0  w-full text-center text-[14vw] md:text-[16vw]  lg:text-[17vw]  xl:text-[17vw]  2xl:text-[17vw]  font-bold text-[#65D800] uppercase opacity-30 select-none pointer-events-none">
         ARTIFICIAL
       </h1>
 
@@ -30,7 +30,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-          className="w-full text-center text-[8vw]  md:text-[14vw] font-extrabold text-transparent tracking-tight md:mt-[-9vw] mt-[-5vw] relative"
+          className="w-full text-center text-[10vw]  md:text-[14vw] font-extrabold text-transparent tracking-tight md:mt-[-9vw] mt-[-6vw] relative"
         >
           <motion.span
             className="bg-gradient-to-r from-[#65D800] via-[#3a6f0d] to-[#26440c] bg-clip-text inline-block bg-[length:200%_auto]"

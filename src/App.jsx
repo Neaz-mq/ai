@@ -42,8 +42,8 @@ export default function App() {
         <div className="relative font-sans">
           <Navbar />
           <main>
-            {/* <Hero />
-            <Benefits />
+            <Hero />
+            {/* <Benefits />
             <Works /> */}
           </main>
            <ScrollToTop />
