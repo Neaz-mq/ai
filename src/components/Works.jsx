@@ -50,55 +50,49 @@ const Works = () => {
       >
         {/* Stats Card */}
         <motion.article
-          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-3 flex flex-col justify-center h-[28vh]"
+          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-4 sm:p-6 flex flex-col justify-center items-center min-h-[28vh] h-auto"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Daily AI-powered interactions"
         >
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            260K+
-          </h3>
-          <p className="text-gray-600 text-xs sm:text-sm mb-2">
-            Daily AI-powered interactions
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-2 text-xs sm:text-sm text-gray-600">
-            <div className="space-y-1">
-              <div className="flex items-center gap-1">
-                <img
-                  src="/arrow.png"
-                  alt="Arrow icon for Human-like conversation flow"
-                  className="w-3 h-3"
-                />
-                Human-like conversation flow
-              </div>
-              <div className="flex items-center gap-1">
-                <img
-                  src="/arrow.png"
-                  alt="Arrow icon for Real-time language translation"
-                  className="w-3 h-3"
-                />
-                Real-time language translation
-              </div>
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-1">
-                <img
-                  src="/arrow.png"
-                  alt="Arrow icon for Context-aware predictions"
-                  className="w-3 h-3"
-                />
-                Context-aware predictions
-              </div>
-              <div className="flex items-center gap-1">
-                <img
-                  src="/arrow.png"
-                  alt="Arrow icon for Emotion detection & sentiment analysis"
-                  className="w-3 h-3"
-                />
-                Emotion detection & sentiment analysis
-              </div>
-            </div>
+          {/* Centered number + description */}
+          <div className="flex flex-col justify-center items-center mb-4 text-center">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 break-words">
+              260K+
+            </h3>
+            <p className="text-gray-600 text-xs sm:text-sm break-words">
+              Daily AI-powered interactions
+            </p>
           </div>
+
+          {/* Points grid */}
+        <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm text-gray-600 w-full">
+  {/* Left column */}
+  <div className="flex flex-col space-y-2 sm:space-y-3 items-start">
+    <div className="flex items-center gap-2 break-words">
+      <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
+      Human-like chat
+    </div>
+    <div className="flex items-center gap-2 break-words">
+      <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
+      Real-time translation
+    </div>
+  </div>
+
+  {/* Right column */}
+ <div className="flex flex-col space-y-2 sm:space-y-3 items-end">
+  <div className="flex items-center gap-2 break-words">
+    <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
+    Context-aware predictions
+  </div>
+  <div className="flex items-center gap-2 break-words">
+    <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
+    Context-aware predictions
+  </div>
+</div>
+</div>
+
+
         </motion.article>
 
         {/* Input Card */}
@@ -119,7 +113,11 @@ const Works = () => {
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Learning process"
         >
-          <img src="/learning.png" alt="Learning Icon" className="w-8 h-8 mb-1" />
+          <img
+            src="/learning.png"
+            alt="Learning Icon"
+            className="w-8 h-8 mb-1"
+          />
           <h4 className="text-sm sm:text-base font-medium">Learning</h4>
         </motion.article>
 

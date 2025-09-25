@@ -102,7 +102,7 @@ const Benefits = () => {
           >
             {/* Animated Gradient Border */}
             <div className="absolute inset-0 rounded-3xl overflow-hidden">
-              <div className="[background:linear-gradient(90deg,#A8FF3E,#6FC22E,#3E6A14)] [background-size:200%_200%] animate-[gradient_6s_ease_infinite] h-full w-full rounded-3xl">
+              <div className="bg-[#D1F3B2] [background:linear-gradient(90deg,#D1F3B2,#A8FF3E)] [background-size:200%_200%] animate-[gradient_6s_ease_infinite] h-full w-full rounded-3xl">
                 <div className="h-full w-full rounded-3xl bg-black/40 backdrop-blur-xl"></div>
               </div>
             </div>
@@ -130,7 +130,7 @@ const Benefits = () => {
 
               {/* Title with Sliding Gradient */}
               <motion.h3
-                className="text-xl md:text-lg font-semibold tracking-wide bg-gradient-to-r from-[#A3FF00] via-[#7ED957] to-[#26440c] bg-clip-text text-transparent inline-block bg-[length:200%_auto]"
+                className="text-xl md:text-lg font-semibold tracking-wide text-white bg-clip-text text-transparent inline-block bg-[length:200%_auto]"
                 initial={{
                   backgroundPosition: "200% center",
                   opacity: 0,
