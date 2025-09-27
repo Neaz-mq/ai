@@ -93,7 +93,7 @@ const Benefits = () => {
         {features.map(({ src, alt, title }, index) => (
           <motion.article
             key={index}
-            className="relative group rounded-3xl flex flex-col items-center justify-center text-white text-center cursor-pointer h-[23vh] md:h-[23vh] lg:h-[26vh] xl:h-[27vh] 2xl:h-[30vh] overflow-hidden"
+            className="relative group rounded-3xl flex flex-col items-center justify-center text-white text-center cursor-pointer h-[34vh] md:h-[23vh] lg:h-[26vh] xl:h-[27vh] 2xl:h-[30vh] overflow-hidden"
             variants={fadeUpVariant}
             whileHover={{ scale: 1.08 }}
             transition={{ type: "spring", stiffness: 120, damping: 12 }}
@@ -157,7 +157,7 @@ const Benefits = () => {
         {images.map(({ src, alt }, index) => (
           <motion.figure
             key={index}
-            className="relative overflow-hidden rounded-3xl cursor-pointer h-[23vh] md:h-[23vh] lg:h-[26vh] xl:h-[27vh] 2xl:h-[30vh] group"
+            className="relative overflow-hidden rounded-3xl cursor-pointer h-[34vh] md:h-[23vh] lg:h-[26vh] xl:h-[27vh] 2xl:h-[30vh] group"
             variants={galleryVariant}
             whileHover={{ scale: 1.04, rotateX: 2, rotateY: -2 }}
             transition={{ type: "spring", stiffness: 120, damping: 12 }}
