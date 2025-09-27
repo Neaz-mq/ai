@@ -104,13 +104,13 @@ const Integration = () => {
               alt="Basic Plan Icon"
               className="w-16 h-16 mb-4"
             />
-            <h3 className="text-3xl font-medium">Basic</h3>
+            <h3 className="text-3xl font-medium mb-2">Basic</h3>
             <p className="text-4xl font-bold my-6">$120</p>
-            <p className="text-sm text-center">
+            <p className="text-sm text-center mb-2">
               Artificial Intelligence (AI) is no longer a futuristic dream—it’s
               here, shaping every aspect of our lives.
             </p>
-            <div className="flex my-4 space-x-1">
+            <div className="flex my-8 space-x-1">
               {Array(5)
                 .fill(0)
                 .map((_, i) => (
@@ -134,13 +134,13 @@ const Integration = () => {
               alt="Standard Plan Icon"
               className="w-16 h-16 mb-4"
             />
-            <h3 className="text-3xl font-medium">Standard</h3>
+            <h3 className="text-3xl font-medium mb-2">Standard</h3>
             <p className="text-4xl font-bold my-6">$365</p>
-            <p className="text-sm text-center">
+            <p className="text-sm text-center mb-2">
               Artificial Intelligence (AI) is no longer a futuristic dream—it’s
               here, shaping every aspect of our lives.
             </p>
-            <div className="flex my-4 space-x-1">
+            <div className="flex my-8 space-x-1">
               {Array(5)
                 .fill(0)
                 .map((_, i) => (
@@ -164,13 +164,13 @@ const Integration = () => {
               alt="Premium Plan Icon"
               className="w-16 h-16 mb-4"
             />
-            <h3 className="text-3xl font-medium">Premium</h3>
+            <h3 className="text-3xl font-medium mb-2">Premium</h3>
             <p className="text-4xl font-bold my-6">$968</p>
-            <p className="text-sm text-center">
+            <p className="text-sm text-center mb-2">
               Artificial Intelligence (AI) is no longer a futuristic dream—it’s
               here, shaping every aspect of our lives.
             </p>
-            <div className="flex my-4 space-x-1">
+            <div className="flex my-8 space-x-1">
               {Array(5)
                 .fill(0)
                 .map((_, i) => (
