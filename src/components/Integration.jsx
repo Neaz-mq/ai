@@ -141,7 +141,7 @@ const Integration = () => {
           viewport={{ once: true, amount: 0.3 }}
         >
           {/* Mobile Swiper Implementation - Hidden on Tablet/Desktop */}
-          <div className="2xl:hidden xl:hidden lg:hidden block flex flex-col items-center">
+          <div className="2xl:hidden xl:hidden lg:hidden  flex flex-col items-center">
             {/* AnimatePresence is used to handle exit/enter animations for the card */}
             <motion.div
               key={activeIndex} // Key change forces re-render and animation
@@ -195,7 +195,7 @@ const Integration = () => {
           {pricingPlans.map((plan) => (
             <motion.div
               key={plan.name} // Use name as key for the grid view
-              className={`hidden md:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center`}
+              className={`hidden 2xl:flex xl:flex lg:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center`}
               variants={cardVariant}
             >
               <img
