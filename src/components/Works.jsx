@@ -44,14 +44,14 @@ const Works = () => {
 
       {/* Top Grid */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4 px-4 md:px-12 mb-12"
+        className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 xl:grid-cols-6 gap-4 px-4 md:px-12 mb-12"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
         {/* Stats Card */}
         <motion.article
-          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-4 sm:p-6 flex flex-col justify-center items-center min-h-[28vh] h-auto"
+          className="sm:col-span-2 lg:col-span-2 xl:col-span-2 rounded-2xl border border-gray-700 shadow-md p-4 sm:p-6 flex flex-col justify-center items-center 2xl:min-h-[28vh] xl:min-h-[27vh] lg:min-h-[25vh] md:min-h-[23vh] h-auto"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Daily AI-powered interactions"
@@ -112,7 +112,7 @@ const Works = () => {
 
         {/* Input Card */}
         <motion.article
-          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
+          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 2xl:h-[28vh] xl:h-[32vh] lg:h-[34vh] md:h-[35vh]  h-[30vh]"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Input process"
@@ -123,7 +123,7 @@ const Works = () => {
 
         {/* Learning Card */}
         <motion.article
-          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
+          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 2xl:h-[28vh] xl:h-[32vh] lg:h-[34vh] md:h-[35vh]  h-[30vh]"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Learning process"
@@ -138,7 +138,7 @@ const Works = () => {
 
         {/* Pattern Card */}
         <motion.article
-          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
+          className="rounded-2xl bg-gray-100 shadow-md flex flex-col items-center justify-center p-3 2xl:h-[28vh] xl:h-[32vh] lg:h-[34vh] md:h-[35vh]  h-[30vh]"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Pattern recognition and prediction"
@@ -151,7 +151,7 @@ const Works = () => {
 
         {/* Output Card */}
         <motion.article
-          className="rounded-2xl bg-gray-900 text-white shadow-md flex flex-col items-center justify-center p-3 h-[28vh]"
+          className="rounded-2xl bg-gray-900 text-white shadow-md flex flex-col items-center justify-center p-3 2xl:h-[28vh] xl:h-[32vh] lg:h-[34vh] md:h-[35vh] h-[30vh]"
           variants={cardVariant}
           whileHover={{ scale: 1.05, y: -3 }}
           aria-label="Output results"
@@ -174,7 +174,7 @@ const Works = () => {
       >
         {/* Left Image Card */}
         <motion.article
-          className="relative md:col-span-2 rounded-2xl overflow-hidden shadow-lg h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-[30vh]"
+          className="relative md:col-span-2 rounded-2xl overflow-hidden shadow-lg h-[30vh] sm:h-[35vh] md:h-[43vh] lg:h-[45vh]"
           variants={bottomVariant} // now used
           initial="hidden"
           whileInView="visible"
@@ -192,7 +192,7 @@ const Works = () => {
 
         {/* Right AI Apps Card */}
         <motion.article
-          className="relative rounded-2xl overflow-hidden shadow-lg h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-[30vh]"
+          className="relative rounded-2xl overflow-hidden shadow-lg h-[30vh] sm:h-[35vh] md:h-[43vh] lg:h-[45vh]"
           variants={bottomVariant} // now used
           initial="hidden"
           whileInView="visible"
