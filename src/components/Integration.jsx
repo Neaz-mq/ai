@@ -18,8 +18,8 @@ const cardVariant = {
     scale: 1,
     transition: {
       type: "spring",
-      stiffness: 100,   // lower stiffness for softer movement
-      damping: 20,      // higher damping for smooth settling
+      stiffness: 100,
+      damping: 20,
       mass: 0.8,
     },
   },
@@ -67,26 +67,28 @@ const Integration = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="relative -mt-28 px-4 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-10 w-full">
+      <div className="relative 2xl:-mt-28 xl:-mt-28 lg:-mt-10 px-4 md:px-12 grid grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-10 w-full">
         {/* Left Text */}
         <motion.header
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={cardVariant}
-          className="flex flex-col justify-center"
+          className="flex flex-col justify-center items-center text-center xl:items-start xl:text-left 2xl:items-start 2xl:text-left"
         >
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
             Services <span className="text-gray-500 font-light">and</span> Price
           </h2>
-          <p className="mt-4 text-sm text-gray-400 max-w-sm">
-            Artificial Intelligence (AI) is no longer a futuristic dream—it’s here, shaping every aspect of our lives. From smart assistants to automated factories, AI is transforming how we live, work, and communicate.
+          <p className="mt-4 text-sm md:text-base text-gray-400 max-w-sm">
+            Artificial Intelligence (AI) is no longer a futuristic dream—it’s
+            here, shaping every aspect of our lives. From smart assistants to
+            automated factories, AI is transforming how we live, work, and
+            communicate.
           </p>
         </motion.header>
-
         {/* Pricing Plans with Stagger */}
         <motion.div
-          className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="2xl:col-span-2 xl:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6"
           variants={containerVariant}
           initial="hidden"
           whileInView="visible"
@@ -97,16 +99,28 @@ const Integration = () => {
             className="bg-teal-900 text-white rounded-3xl p-8 shadow-lg flex flex-col items-center"
             variants={cardVariant}
           >
-            <img src="/basic.png" alt="icon" />
+            <img
+              src="/basic.png"
+              alt="Basic Plan Icon"
+              className="w-16 h-16 mb-4"
+            />
             <h3 className="text-3xl font-medium">Basic</h3>
             <p className="text-4xl font-bold my-6">$120</p>
             <p className="text-sm text-center">
-              Artificial Intelligence (AI) is no longer a futuristic dream—it’s here, shaping every aspect of our lives.
+              Artificial Intelligence (AI) is no longer a futuristic dream—it’s
+              here, shaping every aspect of our lives.
             </p>
             <div className="flex my-4 space-x-1">
-              {Array(5).fill(0).map((_, i) => (
-                <img key={i} src="/review.png" alt="review star" className="w-5 h-5" />
-              ))}
+              {Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <img
+                    key={i}
+                    src="/review.png"
+                    alt="review star"
+                    className="w-5 h-5"
+                  />
+                ))}
             </div>
           </motion.div>
 
@@ -115,16 +129,28 @@ const Integration = () => {
             className="bg-gray-100 text-green-600 rounded-3xl p-8 shadow-lg flex flex-col items-center"
             variants={cardVariant}
           >
-            <img src="/standard.png" alt="icon" />
+            <img
+              src="/standard.png"
+              alt="Standard Plan Icon"
+              className="w-16 h-16 mb-4"
+            />
             <h3 className="text-3xl font-medium">Standard</h3>
             <p className="text-4xl font-bold my-6">$365</p>
             <p className="text-sm text-center">
-              Artificial Intelligence (AI) is no longer a futuristic dream—it’s here, shaping every aspect of our lives.
+              Artificial Intelligence (AI) is no longer a futuristic dream—it’s
+              here, shaping every aspect of our lives.
             </p>
             <div className="flex my-4 space-x-1">
-              {Array(5).fill(0).map((_, i) => (
-                <img key={i} src="/review2.png" alt="review star" className="w-5 h-5" />
-              ))}
+              {Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <img
+                    key={i}
+                    src="/review2.png"
+                    alt="review star"
+                    className="w-5 h-5"
+                  />
+                ))}
             </div>
           </motion.div>
 
@@ -133,16 +159,28 @@ const Integration = () => {
             className="bg-[#65D800] text-white rounded-3xl p-8 shadow-lg flex flex-col items-center"
             variants={cardVariant}
           >
-            <img src="/basic.png" alt="icon" />
+            <img
+              src="/basic.png"
+              alt="Premium Plan Icon"
+              className="w-16 h-16 mb-4"
+            />
             <h3 className="text-3xl font-medium">Premium</h3>
             <p className="text-4xl font-bold my-6">$968</p>
             <p className="text-sm text-center">
-              Artificial Intelligence (AI) is no longer a futuristic dream—it’s here, shaping every aspect of our lives.
+              Artificial Intelligence (AI) is no longer a futuristic dream—it’s
+              here, shaping every aspect of our lives.
             </p>
             <div className="flex my-4 space-x-1">
-              {Array(5).fill(0).map((_, i) => (
-                <img key={i} src="/review.png" alt="review star" className="w-5 h-5" />
-              ))}
+              {Array(5)
+                .fill(0)
+                .map((_, i) => (
+                  <img
+                    key={i}
+                    src="/review.png"
+                    alt="review star"
+                    className="w-5 h-5"
+                  />
+                ))}
             </div>
           </motion.div>
         </motion.div>
