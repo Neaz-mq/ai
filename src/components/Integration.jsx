@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
-// Variants
+// Variants (Keep them as they are for the staggering/animation effect)
 const containerVariant = {
   hidden: {},
   visible: {
@@ -25,7 +26,51 @@ const cardVariant = {
   },
 };
 
+// Data for the pricing plans
+const pricingPlans = [
+  {
+    name: "Basic",
+    price: "$120",
+    colorClass: "bg-teal-900 text-white",
+    icon: "/basic.png",
+    reviewIcon: "/review.png",
+  },
+  {
+    name: "Standard",
+    price: "$365",
+    colorClass: "bg-gray-100 text-green-600",
+    icon: "/standard.png",
+    reviewIcon: "/review2.png",
+  },
+  {
+    name: "Premium",
+    price: "$968",
+    colorClass: "bg-[#65D800] text-white",
+    icon: "/basic.png", // Assuming the same icon as basic, change if needed
+    reviewIcon: "/review.png",
+  },
+];
+
 const Integration = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const totalCards = pricingPlans.length;
+
+  // Effect to handle automatic cycling of cards
+  useEffect(() => {
+    // Set the interval to change the card every 5 seconds (5000ms)
+    const intervalId = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % totalCards);
+    }, 5000);
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [totalCards]); // Dependency array includes totalCards
+
+  // Function for manual dot clicks (still works)
+  const handleDotClick = (index) => {
+    setActiveIndex(index);
+  };
+
   return (
     <section
       id="integration"
@@ -47,7 +92,7 @@ const Integration = () => {
         </motion.h2>
       </header>
 
-      {/* Top Image */}
+      {/* Top Image (Unchanged) */}
       <div className="relative w-full mb-20 px-4 md:px-10">
         <div className="relative group rounded-3xl overflow-hidden">
           <img
@@ -68,7 +113,7 @@ const Integration = () => {
 
       {/* Bottom Section */}
       <div className="relative 2xl:-mt-28 xl:-mt-28 lg:-mt-10 px-4 md:px-12 grid grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-10 w-full">
-        {/* Left Text */}
+        {/* Left Text (Unchanged) */}
         <motion.header
           initial="hidden"
           whileInView="visible"
@@ -86,103 +131,98 @@ const Integration = () => {
             communicate.
           </p>
         </motion.header>
-        {/* Pricing Plans with Stagger */}
+
+        {/* Pricing Plans Swiper for Mobile, Grid for Tablet/Desktop */}
         <motion.div
-          className="2xl:col-span-2 xl:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="2xl:col-span-2 xl:col-span-2 lg:col-span-3 grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3  gap-6"
           variants={containerVariant}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          {/* Basic Plan */}
-          <motion.div
-            className="bg-teal-900 text-white rounded-3xl p-8 shadow-lg flex flex-col items-center"
-            variants={cardVariant}
-          >
-            <img
-              src="/basic.png"
-              alt="Basic Plan Icon"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="text-3xl font-medium mb-2">Basic</h3>
-            <p className="text-4xl font-bold my-6">$120</p>
-            <p className="text-sm text-center mb-2">
-              Artificial Intelligence (AI) is no longer a futuristic dream—it’s
-              here, shaping every aspect of our lives.
-            </p>
-            <div className="flex my-8 space-x-1">
-              {Array(5)
-                .fill(0)
-                .map((_, i) => (
-                  <img
-                    key={i}
-                    src="/review.png"
-                    alt="review star"
-                    className="w-5 h-5"
-                  />
-                ))}
-            </div>
-          </motion.div>
+          {/* Mobile Swiper Implementation - Hidden on Tablet/Desktop */}
+          <div className="2xl:hidden xl:hidden lg:hidden block flex flex-col items-center">
+            {/* AnimatePresence is used to handle exit/enter animations for the card */}
+            <motion.div
+              key={activeIndex} // Key change forces re-render and animation
+              className={`${pricingPlans[activeIndex].colorClass} rounded-3xl p-8 shadow-xl flex flex-col items-center w-full`}
+              // Using Framer Motion's component prop for exit animations
+              initial={{ opacity: 0, x: 50, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 100, damping: 20, mass: 0.8 }}
+            >
+              <img
+                src={pricingPlans[activeIndex].icon}
+                alt={`${pricingPlans[activeIndex].name} Plan Icon`}
+                className="w-16 h-16 mb-4"
+              />
+              <h3 className="text-3xl font-medium mb-2">{pricingPlans[activeIndex].name}</h3>
+              <p className="text-4xl font-bold my-6">{pricingPlans[activeIndex].price}</p>
+              <p className="text-sm text-center mb-2">
+                Artificial Intelligence (AI) is no longer a futuristic dream—it’s
+                here, shaping every aspect of our lives.
+              </p>
+              <div className="flex my-8 space-x-1">
+                {Array(5)
+                  .fill(0)
+                  .map((_, i) => (
+                    <img
+                      key={i}
+                      src={pricingPlans[activeIndex].reviewIcon}
+                      alt="review star"
+                      className="w-5 h-5"
+                    />
+                  ))}
+              </div>
+            </motion.div>
 
-          {/* Standard Plan */}
-          <motion.div
-            className="bg-gray-100 text-green-600 rounded-3xl p-8 shadow-lg flex flex-col items-center"
-            variants={cardVariant}
-          >
-            <img
-              src="/standard.png"
-              alt="Standard Plan Icon"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="text-3xl font-medium mb-2">Standard</h3>
-            <p className="text-4xl font-bold my-6">$365</p>
-            <p className="text-sm text-center mb-2">
-              Artificial Intelligence (AI) is no longer a futuristic dream—it’s
-              here, shaping every aspect of our lives.
-            </p>
-            <div className="flex my-8 space-x-1">
-              {Array(5)
-                .fill(0)
-                .map((_, i) => (
-                  <img
-                    key={i}
-                    src="/review2.png"
-                    alt="review star"
-                    className="w-5 h-5"
-                  />
-                ))}
+            {/* Dots Indicator */}
+            <div className="flex space-x-2 mt-8">
+              {pricingPlans.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleDotClick(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ease-in-out ${
+                    index === activeIndex ? "bg-[#65D800] w-6" : "bg-gray-300"
+                  }`}
+                  aria-label={`Go to ${_.name} plan`}
+                />
+              ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Premium Plan */}
-          <motion.div
-            className="bg-[#65D800] text-white rounded-3xl p-8 shadow-lg flex flex-col items-center"
-            variants={cardVariant}
-          >
-            <img
-              src="/basic.png"
-              alt="Premium Plan Icon"
-              className="w-16 h-16 mb-4"
-            />
-            <h3 className="text-3xl font-medium mb-2">Premium</h3>
-            <p className="text-4xl font-bold my-6">$968</p>
-            <p className="text-sm text-center mb-2">
-              Artificial Intelligence (AI) is no longer a futuristic dream—it’s
-              here, shaping every aspect of our lives.
-            </p>
-            <div className="flex my-8 space-x-1">
-              {Array(5)
-                .fill(0)
-                .map((_, i) => (
-                  <img
-                    key={i}
-                    src="/review.png"
-                    alt="review star"
-                    className="w-5 h-5"
-                  />
-                ))}
-            </div>
-          </motion.div>
+          {/* Tablet/Desktop Grid Implementation (Hidden on Mobile) */}
+          {pricingPlans.map((plan) => (
+            <motion.div
+              key={plan.name} // Use name as key for the grid view
+              className={`hidden md:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center`}
+              variants={cardVariant}
+            >
+              <img
+                src={plan.icon}
+                alt={`${plan.name} Plan Icon`}
+                className="w-16 h-16 mb-4"
+              />
+              <h3 className="text-3xl font-medium mb-2">{plan.name}</h3>
+              <p className="text-4xl font-bold my-6">{plan.price}</p>
+              <p className="text-sm text-center mb-2">
+                Artificial Intelligence (AI) is no longer a futuristic dream—it’s
+                here, shaping every aspect of our lives.
+              </p>
+              <div className="flex my-8 space-x-1">
+                {Array(5)
+                  .fill(0)
+                  .map((_, i) => (
+                    <img
+                      key={i}
+                      src={plan.reviewIcon}
+                      alt="review star"
+                      className="w-5 h-5"
+                    />
+                  ))}
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
