@@ -8,6 +8,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Works from "./components/Works";
 import Empower from "./components/Empower";
 import Integration from "./components/Integration";
+import Contact from "./components/Contact";
 
 
 export default function App() {
@@ -50,7 +51,7 @@ export default function App() {
             <Works />
             <Empower />
             <Integration />
-           
+           <Contact />
           </main>
            <ScrollToTop />
         </div>
