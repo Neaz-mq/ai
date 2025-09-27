@@ -7,6 +7,7 @@ import Benefits from "./components/Benefits";
 import ScrollToTop from "./components/ScrollToTop";
 import Works from "./components/Works";
 import Empower from "./components/Empower";
+import Integration from "./components/Integration";
 
 
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
             <Benefits />
             <Works />
             <Empower />
+            <Integration />
            
           </main>
            <ScrollToTop />
