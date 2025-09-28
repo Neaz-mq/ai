@@ -9,6 +9,7 @@ import Works from "./components/Works";
 import Empower from "./components/Empower";
 import Integration from "./components/Integration";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
            <Contact />
           </main>
            <ScrollToTop />
+           <Footer />
         </div>
       )}
     </>
