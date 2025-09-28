@@ -124,7 +124,7 @@ const Contact = () => {
 
           {/* Right: Form */}
           <motion.div
-            className="p-8 md:p-24 rounded-3xl bg-green-950/70 backdrop-blur-sm shadow-2xl border border-indigo-900/50 xl:mt-[-13rem] lg:mt-[3rem] md:mt-[3rem] mt-[2rem]"
+            className="p-8 md:p-24 rounded-3xl bg-green-950/70 backdrop-blur-sm shadow-2xl border border-indigo-900/50 xl:mt-[-14rem] lg:mt-[3rem] md:mt-[3rem] mt-[2rem]"
             variants={formVariant}
             initial="hidden"
             whileInView="visible"
