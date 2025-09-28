@@ -12,18 +12,30 @@ const Hero = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Background "ARTIFICIAL"
+      // Trendy Background "ARTIFICIAL" Animation
       gsap.fromTo(
         bgTextRef.current,
-        { opacity: 0, scale: 0.8, y: 60 },
+        { opacity: 0, scale: 0.9, y: 60, rotation: -2 },
         {
           opacity: 0.3,
           scale: 1,
           y: 0,
+          rotation: 0,
           duration: 2,
           ease: "power4.out",
         }
       );
+
+      // Subtle floating + glow loop
+      gsap.to(bgTextRef.current, {
+        y: 10,
+        scale: 1.02,
+        textShadow: "0px 0px 25px #65D800",
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
 
       // Intelligence text reveal
       gsap.fromTo(
@@ -66,7 +78,7 @@ const Hero = () => {
 
       {/* Foreground content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 sm:px-6 lg:px-12 pointer-events-none">
-        {/* VR Image with super smooth entrance + subtle float */}
+        {/* VR Image with smooth rise + subtle float */}
         <motion.img
           src="https://res.cloudinary.com/dxohwanal/image/upload/v1758618654/1_xrlp0v.png"
           alt="Person wearing VR headset"
@@ -76,11 +88,12 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 2.2,
-            ease: [0.25, 0.1, 0.25, 1], // smooth cubic-bezier for soft rise
+            ease: [0.25, 0.1, 0.25, 1],
           }}
-          whileHover={{ y: -5 }} // subtle lift on hover
+          whileHover={{ y: -5 }}
         />
-        {/* Optional floating animation after load */}
+
+        {/* Floating sway overlay */}
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{
@@ -91,7 +104,7 @@ const Hero = () => {
           className="absolute top-0 left-0 w-full h-full"
         />
 
-        {/* Intelligence Text (GSAP controlled) */}
+        {/* Intelligence Text */}
         <h2
           ref={textRef}
           className="w-full text-center text-[10vw] md:text-[14vw] font-extrabold text-transparent tracking-tight md:mt-[-9vw] mt-[-6vw] relative"
