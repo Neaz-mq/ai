@@ -66,19 +66,29 @@ const Hero = () => {
 
       {/* Foreground content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 sm:px-6 lg:px-12 pointer-events-none">
-        {/* VR Image with smooth bottom-to-position animation */}
+        {/* VR Image with super smooth entrance + subtle float */}
         <motion.img
           src="https://res.cloudinary.com/dxohwanal/image/upload/v1758618654/1_xrlp0v.png"
           alt="Person wearing VR headset"
           className="w-[58vw] md:w-[54vw] lg:w-[56vw] object-contain drop-shadow-xl"
           loading="lazy"
-          initial={{ opacity: 0, y: 200 }}
+          initial={{ opacity: 0, y: 250 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 1.8,
-            delay: 0.5,
-            ease: [0.16, 1, 0.3, 1], // smooth spring-like cubic bezier
+            duration: 2.2,
+            ease: [0.25, 0.1, 0.25, 1], // smooth cubic-bezier for soft rise
           }}
+          whileHover={{ y: -5 }} // subtle lift on hover
+        />
+        {/* Optional floating animation after load */}
+        <motion.div
+          animate={{ y: [0, -10, 0] }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-0 left-0 w-full h-full"
         />
 
         {/* Intelligence Text (GSAP controlled) */}
