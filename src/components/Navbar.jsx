@@ -79,12 +79,15 @@ const Navbar = () => {
 
           {/* Contact Button (desktop only) */}
           <div className="hidden lg:flex absolute right-6">
-            <button
+            <Link
+              to="contact" // 👈 must match the id/name of your Contact section
+              smooth={true}
+              offset={-80}
+              duration={500}
               className="px-6 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer"
-              aria-label="Contact"
             >
               Contact
-            </button>
+            </Link>
           </div>
 
           {/* Hamburger Menu Button (tablet & mobile) */}
@@ -189,12 +192,16 @@ const Navbar = () => {
             Integration
           </Link>
           {/* Smaller Contact button */}
-          <button
-            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer"
+          <Link
+            to="contact" // 👈 must match the id of your Contact section
+            smooth={true}
+            offset={-80}
+            duration={500}
             onClick={() => setIsMenuOpen(false)}
+            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer text-center"
           >
             Contact
-          </button>
+          </Link>
         </div>
       </div>
     </header>
