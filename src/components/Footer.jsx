@@ -40,19 +40,19 @@ const Footer = () => {
       <ToastContainer position="top-center" autoClose={3000} />
 
       {/* Top Section */}
-      <div className=" px-6 lg:px-24 py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="px-6 lg:px-24 py-12 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2  gap-12">
         {/* Left Side */}
         <div>
           <img
             src="/logo.png"
             alt="AI Logo"
-            className="h-20 w-20  rounded-full mb-6 ml-[-0.6rem]"
+            className="h-20 w-20 rounded-full mb-6 ml-[-0.6rem]"
             loading="lazy"
           />
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {/* Left Column Pages */}
-            <div className="flex flex-col space-y-4 font-semibold">
+            <nav aria-label="Primary Footer Navigation" className="flex flex-col space-y-4 font-semibold">
               <Link
                 to="home"
                 smooth={true}
@@ -80,10 +80,10 @@ const Footer = () => {
               >
                 How It Works
               </Link>
-            </div>
+            </nav>
 
             {/* Right Column Pages */}
-            <div className="flex flex-col space-y-4 font-semibold">
+            <nav aria-label="AI Footer Navigation" className="flex flex-col space-y-4 font-semibold">
               <Link
                 to="empowerai"
                 smooth={true}
@@ -100,7 +100,16 @@ const Footer = () => {
                 duration={500}
                 className="cursor-pointer hover:text-[#65D800] transition-colors"
               >
-                Integration
+                AI Integration
+              </Link>
+              <Link
+                to="ai-research"
+                smooth={true}
+                offset={-80}
+                duration={500}
+                className="cursor-pointer hover:text-[#65D800] transition-colors"
+              >
+                AI Research
               </Link>
               <Link
                 to="contact"
@@ -109,84 +118,109 @@ const Footer = () => {
                 duration={500}
                 className="cursor-pointer hover:text-[#65D800] transition-colors"
               >
-                Contact
+                AI Support & Contact
               </Link>
-            </div>
-          </div>
+            </nav>
 
-          {/* Social Icons (aligned under "Home") */}
-          <div className="flex space-x-6 mt-8 text-xl pl-[2px]">
-            <FaFacebookF className="cursor-pointer hover:text-[#65D800]" />
-            <FaTwitter className="cursor-pointer hover:text-[#65D800]" />
-            <FaInstagram className="cursor-pointer hover:text-[#65D800]" />
-            <FaLinkedinIn className="cursor-pointer hover:text-[#65D800]" />
-            <FaYoutube className="cursor-pointer hover:text-[#65D800]" />
+            {/* Social Icons Column */}
+            <div className="flex flex-col space-y-4" aria-label="Social Media Links">
+              <h4 className="font-semibold mb-4">Follow Us</h4>
+              <div className="flex space-x-6 text-xl">
+                <a
+                  href="https://www.facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="hover:text-[#65D800]"
+                >
+                  <FaFacebookF />
+                </a>
+                <a
+                  href="https://www.twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter"
+                  className="hover:text-[#65D800]"
+                >
+                  <FaTwitter />
+                </a>
+                <a
+                  href="https://www.instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="hover:text-[#65D800]"
+                >
+                  <FaInstagram />
+                </a>
+                <a
+                  href="https://www.linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="hover:text-[#65D800]"
+                >
+                  <FaLinkedinIn />
+                </a>
+             
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Right Side */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">
-            Get the freshest AI insights
-          </h3>
-          <div className="flex">
+          <h3 className="text-lg font-semibold mb-4">Get the freshest AI insights</h3>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubscribe();
+            }}
+            className="flex flex-col sm:flex-row gap-4"
+            aria-label="Subscribe to newsletter"
+          >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Your email here"
-              className="px-4 py-2 w-full bg-transparent border border-gray-400 text-white placeholder-white rounded-l-md focus:outline-none"
+              className="px-4 py-2 w-full sm:flex-1 bg-transparent border border-gray-400 text-white placeholder-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#65D800]"
+              required
             />
             <button
-              onClick={handleSubscribe}
-              className="bg-[#65D800] px-6 py-2 font-semibold rounded-r-md hover:bg-green-500 transition-colors cursor-pointer"
+              type="submit"
+              className="bg-[#65D800] px-6 py-2 font-semibold rounded-md hover:bg-green-500 transition-colors cursor-pointer"
             >
               Subscribe
             </button>
-          </div> 
+          </form>
 
-          {/* Extended Paragraph */}
           <p className="text-sm mt-4 text-gray-200 leading-7 tracking-wide">
-            Artificial Intelligence is shaping the future of industries,
-            transforming the way we live, work, and connect. From powering smart
-            assistants to revolutionizing healthcare, AI continues to unlock new
-            opportunities every day. Businesses are harnessing AI to drive
-            innovation and efficiency, while researchers push the boundaries of
-            what machines can achieve.
+            Artificial Intelligence is shaping the future of industries, transforming the way we live, work, and connect. From powering smart assistants to revolutionizing healthcare, AI continues to unlock new opportunities every day.
           </p>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="border-t border-gray-600"></div>
+      <hr className="border-gray-600" />
 
       {/* Bottom Section */}
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-6 flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
         {/* Legal Links */}
-        <div className="flex flex-wrap gap-3 md:gap-6">
-          <span className="cursor-pointer hover:text-[#65D800]">
-            Website Terms
-          </span>
+        <nav aria-label="Footer Legal Links" className="flex flex-wrap gap-3 md:gap-6 text-gray-300">
+          <a href="/terms" className="hover:text-[#65D800]">Website Terms</a>
           <span className="hidden md:block">|</span>
-          <span className="cursor-pointer hover:text-[#65D800]">
-            Privacy Policy
-          </span>
+          <a href="/privacy" className="hover:text-[#65D800]">Privacy Policy</a>
           <span className="hidden md:block">|</span>
-          <span className="cursor-pointer hover:text-[#65D800]">
-            Accessibility Statement
-          </span>
+          <a href="/accessibility" className="hover:text-[#65D800]">Accessibility Statement</a>
           <span className="hidden md:block">|</span>
-          <span className="cursor-pointer hover:text-[#65D800]">
-            AI Transparency
-          </span>
+          <a href="/transparency" className="hover:text-[#65D800]">AI Transparency</a>
           <span className="hidden md:block">|</span>
-          <span className="cursor-pointer hover:text-[#65D800]">
-            Supplier Code
-          </span>
-        </div>
+          <a href="/supplier-code" className="hover:text-[#65D800]">Supplier Code</a>
+        </nav>
 
         {/* Year */}
-        <p className="text-gray-300">© {year} AI Corp. All Rights Reserved.</p>
+        <p className="text-gray-300 text-center md:text-right">© {year} AI Corp. All Rights Reserved.</p>
       </div>
     </footer>
   );
