@@ -20,7 +20,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="text-white relative bg-[url('https://res.cloudinary.com/dxohwanal/image/upload/v1759037067/c2e2f213e1e503847422279b40868bb4_lp1rah.jpg')] bg-cover bg-center">
+    <footer className="text-white relative bg-[url('https://res.cloudinary.com/dxohwanal/image/upload/v1759037067/c2e2f213e1e503847422279b40868bb4_lp1rah.jpg')] bg-cover bg-center py-10">
       <ToastContainer position="top-center" autoClose={3000} />
 
       {/* Top Section */}
