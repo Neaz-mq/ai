@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
-// Variants (Keep them as they are for the staggering/animation effect)
 const containerVariant = {
   hidden: {},
   visible: {
@@ -57,14 +56,11 @@ const Integration = () => {
 
   // Effect to handle automatic cycling of cards
   useEffect(() => {
-    // Set the interval to change the card every 5 seconds (5000ms)
     const intervalId = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % totalCards);
     }, 5000);
-
-    // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, [totalCards]); // Dependency array includes totalCards
+  }, [totalCards]); 
 
   // Function for manual dot clicks (still works)
   const handleDotClick = (index) => {
@@ -142,11 +138,9 @@ const Integration = () => {
         >
           {/* Mobile Swiper Implementation - Hidden on Tablet/Desktop */}
           <div className="2xl:hidden xl:hidden lg:hidden  flex flex-col items-center">
-            {/* AnimatePresence is used to handle exit/enter animations for the card */}
             <motion.div
               key={activeIndex} // Key change forces re-render and animation
               className={`${pricingPlans[activeIndex].colorClass} rounded-3xl p-8 shadow-xl flex flex-col items-center w-full`}
-              // Using Framer Motion's component prop for exit animations
               initial={{ opacity: 0, x: 50, scale: 0.95 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 100, damping: 20, mass: 0.8 }}
@@ -194,7 +188,7 @@ const Integration = () => {
           {/* Tablet/Desktop Grid Implementation (Hidden on Mobile) */}
           {pricingPlans.map((plan) => (
             <motion.div
-              key={plan.name} // Use name as key for the grid view
+              key={plan.name} 
               className={`hidden 2xl:flex xl:flex lg:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center`}
               variants={cardVariant}
             >

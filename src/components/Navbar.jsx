@@ -3,7 +3,6 @@ import { Link } from "react-scroll";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
@@ -80,7 +79,7 @@ const Navbar = () => {
           {/* Contact Button (desktop only) */}
           <div className="hidden lg:flex absolute right-6">
             <Link
-              to="contact" // 👈 must match the id/name of your Contact section
+              to="contact" 
               smooth={true}
               offset={-80}
               duration={500}
@@ -193,7 +192,7 @@ const Navbar = () => {
           </Link>
           {/* Smaller Contact button */}
           <Link
-            to="contact" // 👈 must match the id of your Contact section
+            to="contact" 
             smooth={true}
             offset={-80}
             duration={500}

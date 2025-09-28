@@ -11,7 +11,6 @@ import Integration from "./components/Integration";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-
 export default function App() {
   const [loading, setLoading] = useState(true);
   const lenisRef = useRef(null);
@@ -20,8 +19,8 @@ export default function App() {
     if (!loading) {
       // Initialize Lenis smooth scrolling
       lenisRef.current = new Lenis({
-        duration: 0.8,          // shorter duration = less smooth
-        easing: (t) => t,       // linear easing
+        duration: 0.8,          
+        easing: (t) => t,
         smooth: true,
         direction: "vertical",
         gestureDirection: "vertical",
