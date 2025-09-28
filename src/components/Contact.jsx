@@ -124,13 +124,13 @@ const Contact = () => {
 
           {/* Right: Form */}
           <motion.div
-            className="p-8 md:p-24 rounded-3xl bg-green-950/70 backdrop-blur-sm shadow-2xl border border-indigo-900/50 mt-[-10.625rem] mx-1"
+            className="p-8 md:p-24 rounded-3xl bg-green-950/70 backdrop-blur-sm shadow-2xl border border-indigo-900/50 xl:mt-[-13rem] lg:mt-[3rem] md:mt-[3rem] mt-[2rem]"
             variants={formVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl md:text-3xl font-bold mb-8">Your Detail</h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-8">Your Details</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-1">
