@@ -93,7 +93,7 @@ const Navbar = () => {
           <div className="flex lg:hidden absolute right-6">
             <button
               onClick={toggleMenu}
-              className="focus:outline-none"
+              className="focus:outline-none cursor-pointer"
               aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
               aria-expanded={isMenuOpen}
             >
