@@ -59,7 +59,7 @@ const Benefits = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h2 className="text-3xl md:text-5xl font-light text-gray-700 leading-snug">
+        <h2 className="text-xl 2xl:text-5xl xl:text-3xl lg:text-3xl md:text-2xl font-light text-gray-700 leading-snug">
           Entering <span className="text-black font-bold">New</span> Worlds Beyond <span className="text-black font-bold">Imagination</span>
         </h2>
         <p className="mt-4 text-gray-500 text-sm md:text-base">
