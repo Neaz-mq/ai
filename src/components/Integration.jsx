@@ -62,7 +62,6 @@ const Integration = () => {
     return () => clearInterval(intervalId);
   }, [totalCards]);
 
-  // Function for manual dot clicks (still works)
   const handleDotClick = (index) => {
     setActiveIndex(index);
   };
@@ -88,13 +87,14 @@ const Integration = () => {
         </motion.h2>
       </header>
 
-      {/* Top Image (Unchanged) */}
+      {/* Top Image */}
       <div className="relative w-full mb-20 px-4 md:px-10">
         <div className="relative group rounded-3xl overflow-hidden">
           <img
             src="https://res.cloudinary.com/dxohwanal/image/upload/v1758952246/18_zrqkii.jpg"
             alt="Integration Banner"
             className="w-full h-64 md:h-72 lg:h-80 object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
@@ -109,7 +109,7 @@ const Integration = () => {
 
       {/* Bottom Section */}
       <div className="relative 2xl:-mt-28 xl:-mt-28 lg:-mt-10 px-4 md:px-12 grid grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-10 w-full">
-        {/* Left Text (Unchanged) */}
+        {/* Left Text */}
         <motion.header
           initial="hidden"
           whileInView="visible"
@@ -128,32 +128,34 @@ const Integration = () => {
           </p>
         </motion.header>
 
-        {/* Pricing Plans Swiper for Mobile, Grid for Tablet/Desktop */}
+        {/* Pricing Plans */}
         <motion.div
-          className="2xl:col-span-2 xl:col-span-2 lg:col-span-3 grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3  gap-6"
+          className="2xl:col-span-2 xl:col-span-2 lg:col-span-3 grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 gap-6"
           variants={containerVariant}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          {/* Mobile Swiper Implementation - Hidden on Tablet/Desktop */}
-          <div className="2xl:hidden xl:hidden lg:hidden  flex flex-col items-center">
+          {/* Mobile Swiper */}
+          <div className="2xl:hidden xl:hidden lg:hidden flex flex-col items-center">
             <motion.div
-              key={activeIndex} // Key change forces re-render and animation
               className={`${pricingPlans[activeIndex].colorClass} rounded-3xl p-8 shadow-xl flex flex-col items-center w-full`}
               initial={{ opacity: 0, x: 50, scale: 0.95 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -50, scale: 0.95 }}
               transition={{
                 type: "spring",
                 stiffness: 100,
                 damping: 20,
                 mass: 0.8,
               }}
+              style={{ willChange: "transform, opacity" }}
             >
               <img
                 src={pricingPlans[activeIndex].icon}
                 alt={`${pricingPlans[activeIndex].name} Plan Icon`}
                 className="w-16 h-16 mb-4"
+                loading="lazy"
               />
               <h3 className="text-3xl font-medium mb-2">
                 {pricingPlans[activeIndex].name}
@@ -174,42 +176,46 @@ const Integration = () => {
                       src={pricingPlans[activeIndex].reviewIcon}
                       alt="review star"
                       className="w-5 h-5"
+                      loading="lazy"
                     />
                   ))}
               </div>
             </motion.div>
 
-            {/* Dots Indicator */}
+            {/* Dots */}
             <div className="flex space-x-2 mt-8">
-              {pricingPlans.map((_, index) => (
+              {pricingPlans.map((plan, index) => (
                 <button
-                  key={index}
+                  key={plan.name}
                   onClick={() => handleDotClick(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ease-in-out ${
                     index === activeIndex ? "bg-[#65D800] w-6" : "bg-gray-300"
                   }`}
-                  aria-label={`Go to ${_.name} plan`}
+                  aria-label={`Go to ${plan.name} plan`}
                 />
               ))}
             </div>
           </div>
 
-          {/* Tablet/Desktop Grid Implementation (Hidden on Mobile) */}
+          {/* Desktop Grid */}
           {pricingPlans.map((plan) => (
             <motion.div
               key={plan.name}
               className={`hidden 2xl:flex xl:flex lg:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center cursor-grab active:cursor-grabbing`}
               variants={cardVariant}
-              drag="x" // enable horizontal drag
-              dragConstraints={{ left: -100, right: 100 }} // adjust constraint as needed
-              dragElastic={0.2} // adds bounce effect
-              whileDrag={{ scale: 1.05, zIndex: 10 }} // lift card when dragging
+              drag="x"
+              dragConstraints={{ left: -100, right: 100 }}
+              dragElastic={0.2}
+              dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
+              whileDrag={{ scale: 1.05, zIndex: 10 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              style={{ willChange: "transform" }}
             >
               <img
                 src={plan.icon}
                 alt={`${plan.name} Plan Icon`}
                 className="w-16 h-16 mb-4"
+                loading="lazy"
               />
               <h3 className="text-3xl font-medium mb-2">{plan.name}</h3>
               <p className="text-4xl font-bold my-6">{plan.price}</p>
@@ -224,8 +230,9 @@ const Integration = () => {
                     <img
                       key={i}
                       src={plan.reviewIcon}
-                      alt="review star" 
+                      alt="review star"
                       className="w-5 h-5"
+                      loading="lazy"
                     />
                   ))}
               </div>

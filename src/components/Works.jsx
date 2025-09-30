@@ -5,43 +5,63 @@ import { motion } from "framer-motion";
 const Works = () => {
   const headerRef = useRef(null);
 
-useEffect(() => {
-  if (headerRef.current) {
-    const letters = headerRef.current.querySelectorAll(".letter");
+  useEffect(() => {
+    if (headerRef.current) {
+      const letters = headerRef.current.querySelectorAll(".letter");
 
-    gsap.set(letters, { yPercent: 0, willChange: "transform" });
+      // Initial setup
+      gsap.set(letters, {
+        yPercent: 0,
+        willChange: "transform",
+        transform: "translateZ(0)", // GPU acceleration
+      });
 
-    const tl = gsap.timeline({ repeat: -1, yoyo: true });
-    tl.to(letters, {
-      yPercent: 15,        // smooth lift
-      duration: 0.6,       // faster cycle
-      ease: "sine.inOut",
-      stagger: {
-        each: 0.04,        // quicker ripple across letters
-      },
-    });
-  }
-}, []);
+      // Timeline loop with GPU-friendly settings
+      const tl = gsap.timeline({ repeat: -1, yoyo: true });
+      tl.to(letters, {
+        yPercent: 15,
+        duration: 0.6,
+        ease: "sine.inOut",
+        stagger: { each: 0.04 },
+        force3D: true, // force GPU
+      });
 
-
+      return () => {
+        tl.kill();
+      };
+    }
+  }, []);
 
   const cardVariant = {
     hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   const bottomVariant = {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
   };
 
-   const splitText = (text) =>
+  const splitText = (text) =>
     text.split("").map((char, i) => (
-      <span key={i} className="letter inline-block">
+      <span
+        key={i}
+        className="letter inline-block will-change-transform"
+        style={{ transform: "translateZ(0)" }}
+      >
         {char === " " ? "\u00A0" : char}
       </span>
     ));
-
 
   return (
     <section
@@ -50,7 +70,7 @@ useEffect(() => {
       aria-labelledby="works-heading"
     >
       {/* Section Header */}
-       <header className="text-center mb-12 px-4">
+      <header className="text-center mb-12 px-4">
         <h2
           ref={headerRef}
           id="works-heading"
@@ -58,7 +78,9 @@ useEffect(() => {
         >
           {splitText("How ")}
           <span className="text-black">{splitText("Artificial")}</span>{" "}
-          <span className="text-gray-500 font-light">{splitText("Intelligence Works")}</span>{" "}
+          <span className="text-gray-500 font-light">
+            {splitText("Intelligence Works")}
+          </span>{" "}
           <span className="text-black">{splitText("(In Simple Terms)")}</span>
         </h2>
       </header>
@@ -174,7 +196,7 @@ useEffect(() => {
           <img
             src="https://res.cloudinary.com/dxohwanal/image/upload/v1758709005/Picture2_xnfqvo.jpg"
             alt="AI data visualization"
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full object-cover rounded-2xl will-change-transform"
           />
           <div className="absolute inset-0 bg-[#65D800] opacity-50 mix-blend-multiply rounded-2xl"></div>
         </motion.article>
@@ -205,7 +227,11 @@ useEffect(() => {
                   transition={{ type: "spring", stiffness: 120, damping: 10 }}
                 >
                   <div className="w-full h-full rounded-full bg-[#1A3635] flex items-center justify-center">
-                    <img src={icon.src} alt={icon.alt} className="w-6 h-6 object-contain" />
+                    <img
+                      src={icon.src}
+                      alt={icon.alt}
+                      className="w-6 h-6 object-contain will-change-transform"
+                    />
                   </div>
                 </motion.div>
               ))}

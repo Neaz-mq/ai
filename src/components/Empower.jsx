@@ -1,9 +1,5 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { Physics2DPlugin } from "gsap/Physics2DPlugin";
-
-gsap.registerPlugin(Physics2DPlugin);
 
 const cardVariant = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
@@ -26,66 +22,158 @@ const bottomVariant = {
 };
 
 const Empower = () => {
-  const flairContainerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const rafRef = useRef(null);
+  const particlesRef = useRef([]);
+  const imagesRef = useRef([]);
+  const runningRef = useRef(false);
 
-useEffect(() => {
-  const container = flairContainerRef.current;
-  if (!container) return;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
 
-  const particleCount = 400; // adjust as needed
+    let w = 0;
+    let h = 0;
+    let dpr = Math.max(1, window.devicePixelRatio || 1);
 
-  const flairs = Array.from({ length: particleCount }).map((_, i) => {
-    const div = document.createElement("div");
-    div.className =
-      "absolute w-6 h-6 sm:w-10 sm:h-10 bg-no-repeat bg-contain opacity-0 pointer-events-none";
-    div.style.backgroundImage = `url(https://assets.codepen.io/16327/flair-${gsap.utils.random(
-      2,
-      35,
-      1
-    )}.png)`;
+    const PARTICLE_COUNT = 350;
+    const IMAGE_COUNT = 12;
+    const flairBase = "https://assets.codepen.io/16327/flair-";
+    const flairExt = ".png";
 
-    // Spread particles evenly across the horizontal range with a little randomness
-    const leftPercent = 10 + i * ((70 - 10) / particleCount) + gsap.utils.random(0, 1.5);
-    div.style.left = `${leftPercent}%`;
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-    container.appendChild(div);
-    return div;
-  });
-
-  const animateFlair = (flair, delay = 0) => {
-    gsap.set(flair, {
-      opacity: 0,
-      top: "100%",
-      rotation: gsap.utils.random(-180, 180),
-    });
-
-    gsap.to(flair, {
-      opacity: 1,
-      duration: 0.6,
-      delay,
-      onComplete: () => {
-        gsap.to(flair, {
-          physics2D: {
-            velocity: gsap.utils.random(20, 300),
-            angle: gsap.utils.random(200, 440),
-            gravity: 200,
-          },
-          rotation: "random(-360,360)",
-          duration: gsap.utils.random(15, 25),
-          ease: "power1.out",
-          onComplete: () => {
-            animateFlair(flair, gsap.utils.random(0.5, 2));
-          },
+    const loadImages = async () => {
+      const promises = [];
+      for (let i = 2; i <= IMAGE_COUNT + 1; i++) {
+        const src = `${flairBase}${i}${flairExt}`;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        const p = new Promise((res) => {
+          img.onload = () => res(img);
+          img.onerror = () => {
+            const fallback = new Image();
+            fallback.src =
+              "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAfq3kcAAAAAASUVORK5CYII=";
+            fallback.onload = () => res(fallback);
+          };
         });
-      },
+        img.src = src;
+        promises.push(p);
+      }
+      imagesRef.current = await Promise.all(promises);
+    };
+
+    const resize = () => {
+      dpr = Math.max(1, window.devicePixelRatio || 1);
+      w = canvas.clientWidth || canvas.parentElement.clientWidth || window.innerWidth;
+      h = canvas.clientHeight || canvas.parentElement.clientHeight || 200;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const createParticle = (index) => {
+      const img = pick(imagesRef.current);
+      const baseSize = rand(14, 34);
+      return {
+        img,
+        x: rand(0.05 * w, 0.95 * w),
+        y: h + rand(0, h * 0.6),
+        size: baseSize * rand(0.85, 1.15),
+        vx: rand(-10, 10),
+        vy: rand(-180, -60) * 0.5,
+        gravity: rand(60, 240),
+        rotation: rand(0, Math.PI * 2),
+        vRot: rand(-0.8, 0.8),
+        alpha: 0,
+        life: rand(10, 22),
+        age: 0,
+        index,
+        delay: rand(0, 3),
+      };
+    };
+
+    const initParticles = () => {
+      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, (_, i) => createParticle(i));
+    };
+
+    let last = performance.now();
+    const tick = (now) => {
+      const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));
+      last = now;
+      ctx.clearRect(0, 0, w, h);
+
+      particlesRef.current.forEach((p, i) => {
+        if (p.delay > 0) {
+          p.delay -= dt;
+          p.alpha = Math.min(1, p.alpha + dt * 0.5);
+        } else {
+          p.age += dt;
+          p.vy += p.gravity * dt;
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.rotation += p.vRot * dt;
+
+          if (p.age < 0.6) p.alpha = Math.min(1, p.alpha + dt * 2);
+          else if (p.age > p.life - 1.6) p.alpha = Math.max(0, p.alpha - dt * 0.6);
+          else p.alpha = Math.min(1, p.alpha + dt * 0.2);
+        }
+
+        if (p.x + p.size > -50 && p.x - p.size < w + 50 && p.y - p.size < h + 200) {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation);
+          ctx.drawImage(p.img, -p.size / 2, -p.size / 2, p.size, p.size);
+          ctx.restore();
+        }
+
+        if (p.y - p.size > h + 200 || p.x < -200 || p.x > w + 200 || p.age > p.life + 2) {
+          const newP = createParticle(p.index);
+          newP.x = rand(0.05 * w, 0.95 * w);
+          newP.y = h + rand(0, h * 0.6);
+          particlesRef.current[i] = newP;
+        }
+      });
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    let canceled = false;
+    (async () => {
+      await loadImages();
+      if (canceled) return;
+      resize();
+      initParticles();
+      setTimeout(() => {
+        last = performance.now();
+        runningRef.current = true;
+        rafRef.current = requestAnimationFrame(tick);
+      }, 30);
+    })();
+
+    window.addEventListener("resize", resize);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) cancelAnimationFrame(rafRef.current);
+      else if (!runningRef.current) {
+        last = performance.now();
+        runningRef.current = true;
+        rafRef.current = requestAnimationFrame(tick);
+      }
     });
-  };
 
-  flairs.forEach((flair, i) => animateFlair(flair, i * 0.05));
-
-  return () => flairs.forEach((f) => f.remove());
-}, []);
-
+    return () => {
+      canceled = true;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", resize);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+  }, []);
 
   return (
     <section
@@ -110,7 +198,7 @@ useEffect(() => {
 
       {/* Top Section */}
       <div className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 gap-6 px-4 md:px-12 mb-20 w-full">
-        {/* Green Left Panel */}
+        {/* Left Panel */}
         <aside className="bg-[#65D800] text-white rounded-3xl p-8 md:p-10 flex flex-col items-center justify-center">
           {["Productivity", "Automation", "Innovation"].map((text, idx) => (
             <div key={idx} className="flex flex-col items-center mb-10 last:mb-0 text-center">
@@ -122,7 +210,7 @@ useEffect(() => {
           ))}
         </aside>
 
-        {/* Middle White Card */}
+        {/* Middle Card */}
         <motion.article
           className="bg-white rounded-3xl shadow-lg border p-6 md:p-10 flex flex-col justify-center gap-8"
           initial="hidden"
@@ -143,7 +231,7 @@ useEffect(() => {
           ))}
         </motion.article>
 
-        {/* Right Robot Card */}
+        {/* Right Card */}
         <motion.figure
           className="relative rounded-3xl overflow-hidden h-[220px] sm:h-[280px] md:h-[320px] lg:h-auto group"
           initial="hidden"
@@ -175,10 +263,12 @@ useEffect(() => {
         </motion.figure>
       </div>
 
-      {/* Bottom Section */}
+      {/* Bottom Section with Particles */}
       <div className="relative px-4 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-10 items-center w-full">
-        {/* Floating particles container */}
-        <div ref={flairContainerRef} className="absolute inset-0 z-0 pointer-events-none"></div>
+        {/* Particle Canvas */}
+        <div className="absolute bottom-0 left-0 w-full h-64 pointer-events-none z-0">
+          <canvas ref={canvasRef} className="w-full h-full" style={{ willChange: "transform, opacity" }} />
+        </div>
 
         {/* Heading */}
         <motion.header
@@ -195,7 +285,7 @@ useEffect(() => {
           </h2>
         </motion.header>
 
-        {/* List of items */}
+        {/* List */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -222,7 +312,7 @@ useEffect(() => {
           </ul>
         </motion.div>
 
-        {/* Robot Head Image */}
+        {/* Robot Image */}
         <motion.figure
           className="relative z-10 flex justify-center"
           initial="hidden"

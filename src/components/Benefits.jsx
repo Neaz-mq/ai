@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Benefits = () => {
   const cardsWrapperRef = useRef(null);
   const [imagesLoaded, setImagesLoaded] = useState(false); // NEW
+  const revealTimeoutRef = useRef(null);
 
   const images = useMemo(
     () => [
@@ -27,74 +28,109 @@ const Benefits = () => {
     []
   );
 
-  // ✅ Wait until all images are loaded before running animations
+  // Preload images — set imagesLoaded when every image finishes loading
   useEffect(() => {
+    let mounted = true;
     let loaded = 0;
     const imageElements = images.map(({ src }) => {
       const img = new Image();
       img.src = src;
+      img.decoding = "async";
       img.onload = () => {
         loaded++;
-        if (loaded === images.length) {
-          setImagesLoaded(true);
+        if (mounted && loaded === images.length) {
+          // small timeout gives the browser a chance to paint decoded images
+          // before we run heavy layout/animation setup
+          revealTimeoutRef.current = setTimeout(() => {
+            setImagesLoaded(true);
+          }, 40);
+        }
+      };
+      img.onerror = () => {
+        // treat errored images as loaded to avoid blocking
+        loaded++;
+        if (mounted && loaded === images.length) {
+          revealTimeoutRef.current = setTimeout(() => {
+            setImagesLoaded(true);
+          }, 40);
         }
       };
       return img;
     });
 
-    // Cleanup if component unmounts before load finishes
     return () => {
+      mounted = false;
       imageElements.forEach((img) => (img.onload = null));
+      if (revealTimeoutRef.current) clearTimeout(revealTimeoutRef.current);
     };
   }, [images]);
 
-  // ✅ Main GSAP ScrollTrigger logic
-  useEffect(() => {
-    if (!imagesLoaded) return; // Wait until images are loaded
+  // Main GSAP + ScrollTrigger logic (useLayoutEffect to avoid paint flicker)
+  useLayoutEffect(() => {
+    if (!imagesLoaded) return;
+
+    // Hide wrapper until everything is set by GSAP to avoid flicker
+    const wrapper = cardsWrapperRef.current;
+    if (wrapper) wrapper.style.visibility = "hidden";
 
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray(".gallery-card", cardsWrapperRef.current);
-      const wrapper = cardsWrapperRef.current;
+      const wrapperEl = cardsWrapperRef.current;
 
-      if (cards.length === 0 || !wrapper) return;
+      if (!wrapperEl || cards.length === 0) {
+        if (wrapper) wrapper.style.visibility = "visible";
+        return;
+      }
 
-      // Set initial styles
+      // Ensure wrapper is as tall as viewport (keeps pin behaviour stable)
+      wrapperEl.style.minHeight = "100vh";
+
+      // Set initial styles (use transforms and autoAlpha for smoother GPU compositing)
       gsap.set(cards, {
         position: "absolute",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
+        willChange: "transform, opacity",
+        transform: "translateZ(0)",
       });
 
-      gsap.set(cards[0], { autoAlpha: 1, yPercent: 0 });
-      gsap.set(cards.slice(1), { autoAlpha: 0, yPercent: 20 });
+      gsap.set(cards[0], { autoAlpha: 1, yPercent: 0, force3D: true });
+      if (cards.length > 1) {
+        gsap.set(cards.slice(1), { autoAlpha: 0, yPercent: 20, force3D: true });
+      }
 
-      // Pinning the wrapper
+      // Create pin — end depends on number of slides
+      const totalScroll = (cards.length - 1) * window.innerHeight + 1;
+
+      // Pin wrapper (pinSpacing true by default, but behavior preserved)
       ScrollTrigger.create({
-        trigger: wrapper,
+        trigger: wrapperEl,
         pin: true,
         start: "top top",
-        end: () => `+=${(cards.length - 1) * window.innerHeight + 1}`,
+        end: `+=${totalScroll}`,
         scrub: true,
+        // optimize by lowering priority of refresh when not necessary
         refreshPriority: -1,
       });
 
-      // Timeline for card transitions
+      // Timeline for transitions
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: wrapper,
+          trigger: wrapperEl,
           start: "top top",
-          end: () => `+=${(cards.length - 1) * window.innerHeight + 1}`,
+          end: `+=${totalScroll}`,
           scrub: 0.5,
         },
       });
 
-      const scrollPerSlide = 1 / (cards.length - 1) || 1;
+      const scrollPerSlide = 1 / Math.max(cards.length - 1, 1);
 
       cards.forEach((card, i) => {
         if (i === 0) return;
 
+        // bring next card in
         tl.to(
           cards[i],
           {
@@ -102,10 +138,13 @@ const Benefits = () => {
             yPercent: 0,
             duration: scrollPerSlide,
             ease: "power3.out",
+            force3D: true,
+            willChange: "transform, opacity",
           },
           i * scrollPerSlide
         );
 
+        // move previous card out
         tl.to(
           cards[i - 1],
           {
@@ -113,22 +152,29 @@ const Benefits = () => {
             yPercent: -20,
             duration: scrollPerSlide,
             ease: "power3.in",
+            force3D: true,
+            willChange: "transform, opacity",
           },
           i * scrollPerSlide
         );
       });
 
-      // Refresh ScrollTrigger after layout is stable
-      const timeout = setTimeout(() => {
+      // small refresh after timeline is created to ensure correct measurements
+      const refreshTimeout = setTimeout(() => {
         ScrollTrigger.refresh(true);
-      }, 100);
+      }, 60);
+
+      // Reveal wrapper now that GSAP has set initial styles
+      if (wrapperEl) wrapperEl.style.visibility = "visible";
 
       return () => {
-        clearTimeout(timeout);
+        clearTimeout(refreshTimeout);
       };
     }, cardsWrapperRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+    };
   }, [imagesLoaded]);
 
   return (
@@ -153,20 +199,33 @@ const Benefits = () => {
 
       <div
         ref={cardsWrapperRef}
+        // keep overflow-hidden and height intact; visibility toggled via script to avoid flicker
         className="cards-wrapper relative h-[100vh] w-full overflow-hidden"
+        aria-hidden={!imagesLoaded}
       >
         {images.map(({ src, alt }, index) => (
           <figure
             key={index}
             className="gallery-card absolute inset-0 flex items-center justify-center w-full h-full"
+            // GPU hint & prevent accidental repaints
+            style={{
+              willChange: "transform, opacity",
+              transform: "translateZ(0)",
+            }}
           >
             <img
               src={src}
               alt={alt}
               className="w-full h-full object-cover object-center"
+              // ensure browser decodes image async; we already preloaded so immediate paint will be ready
+              decoding="async"
+              // do not lazy-load here to avoid surprise loads while scrolling
+              loading="eager"
+              // small style hint to keep images from triggering layout shifts
+              style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent"></div>
-            <div className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 bg-black/50 px-4 md:px-6 py-2 md:py-3 rounded-xl text-white text-sm md:text-xl font-medium backdrop-blur-sm shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 bg-black/50 px-4 md:px-6 py-2 md:py-3 rounded-xl text-white text-sm md:text-xl font-medium backdrop-blur-sm shadow-lg pointer-events-none">
               {alt}
             </div>
           </figure>

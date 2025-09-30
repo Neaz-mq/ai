@@ -13,40 +13,47 @@ import Footer from "./components/Footer";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [ready, setReady] = useState(false); // Add this
   const lenisRef = useRef(null);
+  const rafIdRef = useRef(null);
 
+  
   useEffect(() => {
     if (!loading) {
-      lenisRef.current = new Lenis({
-        duration: 0.8,
-        easing: (t) => t,
-        smooth: true,
-        direction: "vertical",
-        gestureDirection: "vertical",
-        infinite: false,
-      });
-
+      // Initialize Lenis only once
+      if (!lenisRef.current) {
+        lenisRef.current = new Lenis({
+          duration: 0.8,
+          easing: (t) => t,
+          smooth: true,
+        });
+      }
       const raf = (time) => {
-        lenisRef.current.raf(time);
-        requestAnimationFrame(raf);
+        if (lenisRef.current) {
+          lenisRef.current.raf(time);
+        }
+        rafIdRef.current = requestAnimationFrame(raf);
       };
-      requestAnimationFrame(raf);
-      requestAnimationFrame(() => {
-        setReady(true);
-      });
+
+      rafIdRef.current = requestAnimationFrame(raf);
 
       return () => {
-        if (lenisRef.current) lenisRef.current.destroy();
+        if (rafIdRef.current) {
+          cancelAnimationFrame(rafIdRef.current);
+        }
+        if (lenisRef.current) {
+          lenisRef.current.destroy();
+          lenisRef.current = null; // reset ref to avoid duplicates
+        }
       };
     }
   }, [loading]);
 
   return (
     <>
-      {loading && <Loader setLoading={setLoading} />}
-      {!loading && ready && (
-        <div className="relative font-sans">
+      {loading ? (
+        <Loader setLoading={setLoading} />
+      ) : (
+        <div className="relative">
           <Navbar />
           <main>
             <Hero />
