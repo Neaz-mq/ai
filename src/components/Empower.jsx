@@ -90,7 +90,7 @@ useEffect(() => {
   return (
     <section
       id="empowerai"
-      className="w-full bg-white py-16 md:py-24 text-gray-800 overflow-x-hidden relative"
+      className="w-full bg-white py-16 md:py-24 text-gray-800 overflow-hidden relative"
       aria-labelledby="empowerai-heading"
     >
       {/* Section Heading */}
