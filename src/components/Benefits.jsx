@@ -10,8 +10,7 @@ const Benefits = () => {
     () => [
       { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758778918/2.1_z5yqri.jpg", alt: "Person experiencing virtual reality" },
       { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779002/2.2_m4ql3j.jpg", alt: "Person using VR outdoors" },
-      { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779033/2.3_gkzihy.jpg", alt: "Person enjoying VR on a couch" },
-     
+      { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779033/2.3_gkzihy.jpg", alt: "Person enjoying VR on a couch" },    
     ],
     []
   );
@@ -20,37 +19,46 @@ useEffect(() => {
   const ctx = gsap.context(() => {
     const cards = gsap.utils.toArray(".gallery-card");
 
-    // Hide all cards initially except the first one
-    gsap.set(cards, { autoAlpha: 0, yPercent: 100 });
+    // hide all except first
+    gsap.set(cards, { autoAlpha: 0, yPercent: 20 });
     gsap.set(cards[0], { autoAlpha: 1, yPercent: 0 });
 
+    // Pin wrapper
+    ScrollTrigger.create({
+      trigger: ".cards-wrapper",
+      pin: true,
+      start: "top top",
+      end: () => `+=${cards.length * window.innerHeight}`,
+      scrub: true,
+    });
+
+    // Timeline for card sequence
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".cards-wrapper",
-        pin: true,
-        scrub: true,
         start: "top top",
         end: () => `+=${cards.length * window.innerHeight}`,
+        scrub: true,
       },
     });
 
     cards.forEach((card, i) => {
       if (i === 0) return;
-      tl.to(card, { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power4.out" }, "+=0.4")
-        .set(cards[i - 1], { autoAlpha: 0, yPercent: 100 });
+
+      // fade in current card
+      tl.to(card, { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power3.out" }, i * 0.5);
+
+      // fade out previous card
+      tl.to(cards[i - 1], { autoAlpha: 0, yPercent: -20, duration: 1, ease: "power3.in" }, i * 0.5);
     });
 
-    ScrollTrigger.refresh(); // recalc positions after layout
-  });
-
-  // Optional: preload images in background without blocking render
-  images.forEach(img => {
-    const image = new Image();
-    image.src = img.src;
+    ScrollTrigger.refresh();
   });
 
   return () => ctx.revert();
 }, [images]);
+
+
 
 
 
