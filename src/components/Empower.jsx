@@ -1,4 +1,9 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { Physics2DPlugin } from "gsap/Physics2DPlugin";
+
+gsap.registerPlugin(Physics2DPlugin);
 
 const cardVariant = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
@@ -21,10 +26,71 @@ const bottomVariant = {
 };
 
 const Empower = () => {
+  const flairContainerRef = useRef(null);
+
+useEffect(() => {
+  const container = flairContainerRef.current;
+  if (!container) return;
+
+  const particleCount = 400; // adjust as needed
+
+  const flairs = Array.from({ length: particleCount }).map((_, i) => {
+    const div = document.createElement("div");
+    div.className =
+      "absolute w-6 h-6 sm:w-10 sm:h-10 bg-no-repeat bg-contain opacity-0 pointer-events-none";
+    div.style.backgroundImage = `url(https://assets.codepen.io/16327/flair-${gsap.utils.random(
+      2,
+      35,
+      1
+    )}.png)`;
+
+    // Spread particles evenly across the horizontal range with a little randomness
+    const leftPercent = 10 + i * ((70 - 10) / particleCount) + gsap.utils.random(0, 1.5);
+    div.style.left = `${leftPercent}%`;
+
+    container.appendChild(div);
+    return div;
+  });
+
+  const animateFlair = (flair, delay = 0) => {
+    gsap.set(flair, {
+      opacity: 0,
+      top: "100%",
+      rotation: gsap.utils.random(-180, 180),
+    });
+
+    gsap.to(flair, {
+      opacity: 1,
+      duration: 0.6,
+      delay,
+      onComplete: () => {
+        gsap.to(flair, {
+          physics2D: {
+            velocity: gsap.utils.random(20, 300),
+            angle: gsap.utils.random(200, 440),
+            gravity: 200,
+          },
+          rotation: "random(-360,360)",
+          duration: gsap.utils.random(15, 25),
+          ease: "power1.out",
+          onComplete: () => {
+            animateFlair(flair, gsap.utils.random(0.5, 2));
+          },
+        });
+      },
+    });
+  };
+
+  flairs.forEach((flair, i) => animateFlair(flair, i * 0.05));
+
+  return () => flairs.forEach((f) => f.remove());
+}, []);
+
+
   return (
     <section
       id="empowerai"
-      className="w-full bg-white py-16 md:py-24 text-gray-800 overflow-x-hidden"
+      className="w-full bg-white py-16 md:py-24 text-gray-800 overflow-x-hidden relative"
       aria-labelledby="empowerai-heading"
     >
       {/* Section Heading */}
@@ -45,18 +111,10 @@ const Empower = () => {
       {/* Top Section */}
       <div className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 gap-6 px-4 md:px-12 mb-20 w-full">
         {/* Green Left Panel */}
-        <aside
-          className="bg-[#65D800] text-white rounded-3xl p-8 md:p-10 flex flex-col items-center justify-center"
-          aria-label="AI Capabilities"
-        >
+        <aside className="bg-[#65D800] text-white rounded-3xl p-8 md:p-10 flex flex-col items-center justify-center">
           {["Productivity", "Automation", "Innovation"].map((text, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center mb-10 last:mb-0 text-center"
-            >
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">
-                {text}
-              </h3>
+            <div key={idx} className="flex flex-col items-center mb-10 last:mb-0 text-center">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">{text}</h3>
               <div className="w-12 h-12 bg-white text-[#65D800] flex items-center justify-center rounded-full text-2xl font-bold">
                 ↓
               </div>
@@ -73,23 +131,12 @@ const Empower = () => {
           variants={cardVariant}
         >
           {[
-            {
-              title: "Introduction to Artificial Intelligence",
-              desc: "Futuristic tech fonts, dark background with neon accents (blue/purple)",
-            },
-            {
-              title: "Applications of AI",
-              desc: "Healthcare, finance, automation, and sustainability initiatives",
-            },
-            {
-              title: "AI & Human Collaboration",
-              desc: "Creating solutions that are inclusive, ethical, and community-driven",
-            },
+            { title: "Introduction to Artificial Intelligence", desc: "Futuristic tech fonts, dark background with neon accents (blue/purple)" },
+            { title: "Applications of AI", desc: "Healthcare, finance, automation, and sustainability initiatives" },
+            { title: "AI & Human Collaboration", desc: "Creating solutions that are inclusive, ethical, and community-driven" },
           ].map((item, idx) => (
             <div key={idx} className="flex flex-col gap-2">
-              <h3 className="text-lg md:text-2xl font-semibold text-gray-900">
-                {item.title}
-              </h3>
+              <h3 className="text-lg md:text-2xl font-semibold text-gray-900">{item.title}</h3>
               <p className="text-sm md:text-base text-gray-600">{item.desc}</p>
               <div className="w-16 h-1 bg-[#65D800] mt-1"></div>
             </div>
@@ -110,29 +157,17 @@ const Empower = () => {
             className="w-full h-full object-cover"
             loading="lazy"
           />
-
-          {/* Black overlay for contrast */}
           <div className="absolute inset-0 bg-black/50"></div>
-
-          {/* White side overlays animation */}
           <div className="absolute inset-0 flex justify-between overflow-hidden pointer-events-none">
             <div className="w-0 shrink-0 bg-white/30 backdrop-blur-md h-full transition-all duration-500 ease-out group-hover:w-1/2"></div>
             <div className="w-0 shrink-0 bg-white/30 backdrop-blur-md h-full transition-all duration-500 ease-out group-hover:w-1/2"></div>
           </div>
-
-          {/* Text content */}
           <figcaption className="absolute inset-0 flex items-center justify-center px-6 text-white text-center z-10">
-            <h3 className="text-5xl sm:text-6xl md:text-7xl font-black text-[#65D800] leading-none pr-3">
-              &
-            </h3>
+            <h3 className="text-5xl sm:text-6xl md:text-7xl font-black text-[#65D800] leading-none pr-3">&</h3>
             <div className="flex flex-col items-start">
-              <h4 className="text-xl sm:text-2xl font-bold text-[#65D800]">
-                Accessibility
-              </h4>
+              <h4 className="text-xl sm:text-2xl font-bold text-[#65D800]">Accessibility</h4>
               <div className="flex items-center space-x-2">
-                <span className="text-sm sm:text-base tracking-wide text-white/90">
-                  Inclusion
-                </span>
+                <span className="text-sm sm:text-base tracking-wide text-white/90">Inclusion</span>
                 <div className="w-8 sm:w-10 h-0.5 bg-white"></div>
               </div>
             </div>
@@ -141,13 +176,17 @@ const Empower = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="px-4 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-10 items-center w-full">
+      <div className="relative px-4 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-10 items-center w-full">
+        {/* Floating particles container */}
+        <div ref={flairContainerRef} className="absolute inset-0 z-0 pointer-events-none"></div>
+
         {/* Heading */}
         <motion.header
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={bottomVariant}
+          className="relative z-10"
         >
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
             <span className="text-gray-900">Empowering </span>
@@ -162,7 +201,7 @@ const Empower = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={bottomVariant}
-          className="p-6 md:p-8 bg-gray-100 rounded-3xl"
+          className="relative z-10 p-6 md:p-8 bg-gray-100 rounded-3xl"
         >
           <ul className="space-y-8">
             {[
@@ -185,7 +224,7 @@ const Empower = () => {
 
         {/* Robot Head Image */}
         <motion.figure
-          className="flex justify-center"
+          className="relative z-10 flex justify-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}

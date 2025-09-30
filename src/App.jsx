@@ -11,6 +11,7 @@ import Integration from "./components/Integration";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
+
 export default function App() {
   const [loading, setLoading] = useState(true);
   const lenisRef = useRef(null);
@@ -46,9 +47,9 @@ export default function App() {
         <div className="relative font-sans">
           <Navbar />
           <main>
-            <Hero />
+            <Hero />         
             <Benefits />
-            <Works />
+            <Works />         
             <Empower />
             <Integration />
            <Contact />
