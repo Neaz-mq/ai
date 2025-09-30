@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
@@ -12,44 +11,48 @@ const Benefits = () => {
       { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758778918/2.1_z5yqri.jpg", alt: "Person experiencing virtual reality" },
       { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779002/2.2_m4ql3j.jpg", alt: "Person using VR outdoors" },
       { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779033/2.3_gkzihy.jpg", alt: "Person enjoying VR on a couch" },
-      { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779060/2.4_osf2xi.jpg", alt: "Person using VR indoors" },
+     
     ],
     []
   );
 
-  useEffect(() => {
-    // Preload images but render cards immediately
-    images.forEach(img => {
-      const image = new Image();
-      image.src = img.src;
+useEffect(() => {
+  const ctx = gsap.context(() => {
+    const cards = gsap.utils.toArray(".gallery-card");
+
+    // Hide all cards initially except the first one
+    gsap.set(cards, { autoAlpha: 0, yPercent: 100 });
+    gsap.set(cards[0], { autoAlpha: 1, yPercent: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".cards-wrapper",
+        pin: true,
+        scrub: true,
+        start: "top top",
+        end: () => `+=${cards.length * window.innerHeight}`,
+      },
     });
 
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".gallery-card");
-
-      // Hide all cards initially
-      gsap.set(cards, { autoAlpha: 0, yPercent: 100 });
-      gsap.set(cards[0], { autoAlpha: 1, yPercent: 0 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".cards-wrapper",
-          pin: true,
-          scrub: true,
-          start: "top top",
-          end: `+=${images.length * 700}`,
-        },
-      });
-
-      cards.forEach((card, i) => {
-        if (i === 0) return;
-        tl.to(card, { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power4.out" }, "+=0.4")
-          .set(cards[i - 1], { autoAlpha: 0, yPercent: 100 });
-      });
+    cards.forEach((card, i) => {
+      if (i === 0) return;
+      tl.to(card, { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power4.out" }, "+=0.4")
+        .set(cards[i - 1], { autoAlpha: 0, yPercent: 100 });
     });
 
-    return () => ctx.revert();
-  }, [images]);
+    ScrollTrigger.refresh(); // recalc positions after layout
+  });
+
+  // Optional: preload images in background without blocking render
+  images.forEach(img => {
+    const image = new Image();
+    image.src = img.src;
+  });
+
+  return () => ctx.revert();
+}, [images]);
+
+
 
   return (
     <section id="benefits" className="relative w-full bg-white text-gray-800 py-16 overflow-hidden">
