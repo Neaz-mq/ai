@@ -60,7 +60,7 @@ const Integration = () => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % totalCards);
     }, 5000);
     return () => clearInterval(intervalId);
-  }, [totalCards]); 
+  }, [totalCards]);
 
   // Function for manual dot clicks (still works)
   const handleDotClick = (index) => {
@@ -143,18 +143,27 @@ const Integration = () => {
               className={`${pricingPlans[activeIndex].colorClass} rounded-3xl p-8 shadow-xl flex flex-col items-center w-full`}
               initial={{ opacity: 0, x: 50, scale: 0.95 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ type: "spring", stiffness: 100, damping: 20, mass: 0.8 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                mass: 0.8,
+              }}
             >
               <img
                 src={pricingPlans[activeIndex].icon}
                 alt={`${pricingPlans[activeIndex].name} Plan Icon`}
                 className="w-16 h-16 mb-4"
               />
-              <h3 className="text-3xl font-medium mb-2">{pricingPlans[activeIndex].name}</h3>
-              <p className="text-4xl font-bold my-6">{pricingPlans[activeIndex].price}</p>
+              <h3 className="text-3xl font-medium mb-2">
+                {pricingPlans[activeIndex].name}
+              </h3>
+              <p className="text-4xl font-bold my-6">
+                {pricingPlans[activeIndex].price}
+              </p>
               <p className="text-sm text-center mb-2">
-                Artificial Intelligence (AI) is no longer a futuristic dream—it’s
-                here, shaping every aspect of our lives.
+                Artificial Intelligence (AI) is no longer a futuristic
+                dream—it’s here, shaping every aspect of our lives.
               </p>
               <div className="flex my-8 space-x-1">
                 {Array(5)
@@ -188,9 +197,14 @@ const Integration = () => {
           {/* Tablet/Desktop Grid Implementation (Hidden on Mobile) */}
           {pricingPlans.map((plan) => (
             <motion.div
-              key={plan.name} 
-              className={`hidden 2xl:flex xl:flex lg:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center`}
+              key={plan.name}
+              className={`hidden 2xl:flex xl:flex lg:flex ${plan.colorClass} rounded-3xl p-8 shadow-lg flex-col items-center cursor-grab active:cursor-grabbing`}
               variants={cardVariant}
+              drag="x" // enable horizontal drag
+              dragConstraints={{ left: -100, right: 100 }} // adjust constraint as needed
+              dragElastic={0.2} // adds bounce effect
+              whileDrag={{ scale: 1.05, zIndex: 10 }} // lift card when dragging
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
               <img
                 src={plan.icon}
@@ -200,8 +214,8 @@ const Integration = () => {
               <h3 className="text-3xl font-medium mb-2">{plan.name}</h3>
               <p className="text-4xl font-bold my-6">{plan.price}</p>
               <p className="text-sm text-center mb-2">
-                Artificial Intelligence (AI) is no longer a futuristic dream—it’s
-                here, shaping every aspect of our lives.
+                Artificial Intelligence (AI) is no longer a futuristic
+                dream—it’s here, shaping every aspect of our lives.
               </p>
               <div className="flex my-8 space-x-1">
                 {Array(5)

@@ -83,7 +83,6 @@ const Hero = () => {
           src="https://res.cloudinary.com/dxohwanal/image/upload/v1758618654/1_xrlp0v.png"
           alt="Person wearing VR headset"
           className="w-[58vw] md:w-[54vw] lg:w-[56vw] object-contain drop-shadow-xl"
-          loading="lazy"
           initial={{ opacity: 0, y: 250 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
