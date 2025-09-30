@@ -19,9 +19,8 @@ useEffect(() => {
   const ctx = gsap.context(() => {
     const cards = gsap.utils.toArray(".gallery-card");
 
-    // hide all except first
-    gsap.set(cards, { autoAlpha: 0, yPercent: 20 });
-    gsap.set(cards[0], { autoAlpha: 1, yPercent: 0 });
+    // Ensure initial visibility immediately to avoid blank screen
+    gsap.set(cards, { autoAlpha: 1, yPercent: 0 });
 
     // Pin wrapper
     ScrollTrigger.create({
@@ -32,7 +31,7 @@ useEffect(() => {
       scrub: true,
     });
 
-    // Timeline for card sequence
+    // Timeline for sequential card fade
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".cards-wrapper",
@@ -45,18 +44,30 @@ useEffect(() => {
     cards.forEach((card, i) => {
       if (i === 0) return;
 
-      // fade in current card
-      tl.to(card, { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power3.out" }, i * 0.5);
+      tl.fromTo(
+        card,
+        { autoAlpha: 0, yPercent: 20 },
+        { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power3.out" },
+        i
+      );
 
-      // fade out previous card
-      tl.to(cards[i - 1], { autoAlpha: 0, yPercent: -20, duration: 1, ease: "power3.in" }, i * 0.5);
+      tl.to(
+        cards[i - 1],
+        { autoAlpha: 0, yPercent: -20, duration: 1, ease: "power3.in" },
+        i
+      );
     });
 
-    ScrollTrigger.refresh();
+    // Refresh after next paint to fix initial blank
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
   });
 
   return () => ctx.revert();
 }, [images]);
+
+
 
 
 
