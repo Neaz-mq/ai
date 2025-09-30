@@ -224,7 +224,7 @@ const Integration = () => {
                     <img
                       key={i}
                       src={plan.reviewIcon}
-                      alt="review star"
+                      alt="review star" 
                       className="w-5 h-5"
                     />
                   ))}
