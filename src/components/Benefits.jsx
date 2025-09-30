@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -6,75 +6,136 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const Benefits = () => {
+  const cardsWrapperRef = useRef(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false); // NEW
+
   const images = useMemo(
     () => [
-      { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758778918/2.1_z5yqri.jpg", alt: "Person experiencing virtual reality" },
-      { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779002/2.2_m4ql3j.jpg", alt: "Person using VR outdoors" },
-      { src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779033/2.3_gkzihy.jpg", alt: "Person enjoying VR on a couch" },    
+      {
+        src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758778918/2.1_z5yqri.jpg",
+        alt: "Person experiencing virtual reality",
+      },
+      {
+        src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779002/2.2_m4ql3j.jpg",
+        alt: "Person using VR outdoors",
+      },
+      {
+        src: "https://res.cloudinary.com/dxohwanal/image/upload/v1758779033/2.3_gkzihy.jpg",
+        alt: "Person enjoying VR on a couch",
+      },
     ],
     []
   );
 
-useEffect(() => {
-  const ctx = gsap.context(() => {
-    const cards = gsap.utils.toArray(".gallery-card");
-
-    // Ensure initial visibility immediately to avoid blank screen
-    gsap.set(cards, { autoAlpha: 1, yPercent: 0 });
-
-    // Pin wrapper
-    ScrollTrigger.create({
-      trigger: ".cards-wrapper",
-      pin: true,
-      start: "top top",
-      end: () => `+=${cards.length * window.innerHeight}`,
-      scrub: true,
+  // ✅ Wait until all images are loaded before running animations
+  useEffect(() => {
+    let loaded = 0;
+    const imageElements = images.map(({ src }) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loaded++;
+        if (loaded === images.length) {
+          setImagesLoaded(true);
+        }
+      };
+      return img;
     });
 
-    // Timeline for sequential card fade
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".cards-wrapper",
+    // Cleanup if component unmounts before load finishes
+    return () => {
+      imageElements.forEach((img) => (img.onload = null));
+    };
+  }, [images]);
+
+  // ✅ Main GSAP ScrollTrigger logic
+  useEffect(() => {
+    if (!imagesLoaded) return; // Wait until images are loaded
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray(".gallery-card", cardsWrapperRef.current);
+      const wrapper = cardsWrapperRef.current;
+
+      if (cards.length === 0 || !wrapper) return;
+
+      // Set initial styles
+      gsap.set(cards, {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+      });
+
+      gsap.set(cards[0], { autoAlpha: 1, yPercent: 0 });
+      gsap.set(cards.slice(1), { autoAlpha: 0, yPercent: 20 });
+
+      // Pinning the wrapper
+      ScrollTrigger.create({
+        trigger: wrapper,
+        pin: true,
         start: "top top",
-        end: () => `+=${cards.length * window.innerHeight}`,
+        end: () => `+=${(cards.length - 1) * window.innerHeight + 1}`,
         scrub: true,
-      },
-    });
+        refreshPriority: -1,
+      });
 
-    cards.forEach((card, i) => {
-      if (i === 0) return;
+      // Timeline for card transitions
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapper,
+          start: "top top",
+          end: () => `+=${(cards.length - 1) * window.innerHeight + 1}`,
+          scrub: 0.5,
+        },
+      });
 
-      tl.fromTo(
-        card,
-        { autoAlpha: 0, yPercent: 20 },
-        { autoAlpha: 1, yPercent: 0, duration: 1, ease: "power3.out" },
-        i
-      );
+      const scrollPerSlide = 1 / (cards.length - 1) || 1;
 
-      tl.to(
-        cards[i - 1],
-        { autoAlpha: 0, yPercent: -20, duration: 1, ease: "power3.in" },
-        i
-      );
-    });
+      cards.forEach((card, i) => {
+        if (i === 0) return;
 
-    // Refresh after next paint to fix initial blank
-    requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-    });
-  });
+        tl.to(
+          cards[i],
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            duration: scrollPerSlide,
+            ease: "power3.out",
+          },
+          i * scrollPerSlide
+        );
 
-  return () => ctx.revert();
-}, [images]);
+        tl.to(
+          cards[i - 1],
+          {
+            autoAlpha: 0,
+            yPercent: -20,
+            duration: scrollPerSlide,
+            ease: "power3.in",
+          },
+          i * scrollPerSlide
+        );
+      });
 
+      // Refresh ScrollTrigger after layout is stable
+      const timeout = setTimeout(() => {
+        ScrollTrigger.refresh(true);
+      }, 100);
 
+      return () => {
+        clearTimeout(timeout);
+      };
+    }, cardsWrapperRef);
 
-
-
-
+    return () => ctx.revert();
+  }, [imagesLoaded]);
 
   return (
-    <section id="benefits" className="relative w-full bg-white text-gray-800 py-16 overflow-hidden">
+    <section
+      id="benefits"
+      className="relative w-full bg-white text-gray-800 py-16 overflow-hidden"
+    >
       <motion.header
         className="text-center mb-12 px-4 max-w-3xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
@@ -82,18 +143,28 @@ useEffect(() => {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <h2 className="text-xl 2xl:text-5xl xl:text-3xl lg:text-3xl md:text-2xl font-light text-gray-700 leading-snug">
-          Entering <span className="text-black font-bold">New</span> Worlds Beyond <span className="text-black font-bold">Imagination</span>
+          Entering <span className="text-black font-bold">New</span> Worlds Beyond{" "}
+          <span className="text-black font-bold">Imagination</span>
         </h2>
         <p className="mt-4 text-gray-500 text-sm md:text-base">
           Explore features that redefine virtual experiences.
         </p>
       </motion.header>
 
-      {/* Cards rendered immediately */}
-      <div className="cards-wrapper relative h-[80vh] md:h-screen w-full overflow-hidden">
+      <div
+        ref={cardsWrapperRef}
+        className="cards-wrapper relative h-[100vh] w-full overflow-hidden"
+      >
         {images.map(({ src, alt }, index) => (
-          <figure key={index} className="gallery-card absolute inset-0 flex items-center justify-center">
-            <img src={src} alt={alt} className="w-full h-full object-cover object-center" />
+          <figure
+            key={index}
+            className="gallery-card absolute inset-0 flex items-center justify-center w-full h-full"
+          >
+            <img
+              src={src}
+              alt={alt}
+              className="w-full h-full object-cover object-center"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent"></div>
             <div className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 bg-black/50 px-4 md:px-6 py-2 md:py-3 rounded-xl text-white text-sm md:text-xl font-medium backdrop-blur-sm shadow-lg">
               {alt}

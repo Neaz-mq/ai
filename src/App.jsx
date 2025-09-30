@@ -11,16 +11,15 @@ import Integration from "./components/Integration";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false); // Add this
   const lenisRef = useRef(null);
 
   useEffect(() => {
     if (!loading) {
-      // Initialize Lenis smooth scrolling
       lenisRef.current = new Lenis({
-        duration: 0.8,          
+        duration: 0.8,
         easing: (t) => t,
         smooth: true,
         direction: "vertical",
@@ -33,6 +32,9 @@ export default function App() {
         requestAnimationFrame(raf);
       };
       requestAnimationFrame(raf);
+      requestAnimationFrame(() => {
+        setReady(true);
+      });
 
       return () => {
         if (lenisRef.current) lenisRef.current.destroy();
@@ -43,19 +45,19 @@ export default function App() {
   return (
     <>
       {loading && <Loader setLoading={setLoading} />}
-      {!loading && (
+      {!loading && ready && (
         <div className="relative font-sans">
           <Navbar />
           <main>
-            <Hero />         
+            <Hero />
             <Benefits />
-            <Works />         
+            <Works />
             <Empower />
             <Integration />
-           <Contact />
+            <Contact />
           </main>
-           <ScrollToTop />
-           <Footer />
+          <ScrollToTop />
+          <Footer />
         </div>
       )}
     </>

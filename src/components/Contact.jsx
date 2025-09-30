@@ -9,20 +9,35 @@ gsap.registerPlugin(MotionPathPlugin);
 
 // --- Icon SVGs ---
 const LocationIcon = (props) => (
-  <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#10B981">
-    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 7 12 7s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="#10B981"
+  >
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 7 12 7s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
   </svg>
 );
 
 const PhoneIcon = (props) => (
-  <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#10B981">
-    <path d="M6.62 10.79a15.466 15.466 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="#10B981"
+  >
+    <path d="M6.62 10.79a15.466 15.466 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
   </svg>
 );
 
 const EmailIcon = (props) => (
-  <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#10B981">
-    <path d="M2.01 3L2 19c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H4c-1.11 0-1.99.9-1.99 2zm17.99 0l-8 5-8-5h16zm0 16l-8-5-8 5V5.99l8 5 8-5V19z"/>
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="#10B981"
+  >
+    <path d="M2.01 3L2 19c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H4c-1.11 0-1.99.9-1.99 2zm17.99 0l-8 5-8-5h16zm0 16l-8-5-8 5V5.99l8 5 8-5V19z" />
   </svg>
 );
 
@@ -40,16 +55,35 @@ const Contact = () => {
 
   useEffect(() => {
     const path = document.querySelector("#motionPath");
-    gsap.to(imageRef.current, {
-      duration: 15,
-      repeat: -1,
-      ease: "power1.inOut",
-      motionPath: {
-        path: path,
-        align: path,
-        alignOrigin: [0.5, 0.5],
-      },
-    });
+    const image = imageRef.current;
+
+    if (!image || !path) return;
+
+    const startAnimation = () => {
+      gsap.to(image, {
+        duration: 15,
+        repeat: -1,
+        ease: "power1.inOut",
+        motionPath: {
+          path: path,
+          align: path,
+          alignOrigin: [0.5, 0.5],
+        },
+      });
+    };
+
+    if (image.complete) {
+      startAnimation();
+    } else {
+      image.addEventListener("load", startAnimation);
+    }
+
+    return () => {
+      gsap.killTweensOf(image);
+      if (image && !image.complete) {
+        image.removeEventListener("load", startAnimation);
+      }
+    };
   }, []);
 
   const contactDetails = [
@@ -85,18 +119,17 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative w-full bg-[#0B4F4A] text-white font-inter overflow-hidden">
-
-      {/* GSAP Motion Path Background with Image */}
-      <div className="absolute inset-0 z-0 overflow-hidden bottom-36">
+    <section id="contact" className="relative w-full bg-[#0B4F4A] text-white overflow-hidden">
+      {/* GSAP Motion Path Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden" style={{ top: "-100px" }}>
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-          <path id="motionPath" d="M50,300 C200,50 600,550 750,300" stroke="transparent" fill="none"/>
+          <path id="motionPath" d="M50,300 C200,50 600,550 750,300" stroke="transparent" fill="none" />
         </svg>
         <img
           ref={imageRef}
           src="https://res.cloudinary.com/dxohwanal/image/upload/v1759137124/pexels-pavel-danilyuk-8294651-removebg-preview_xk47jw.png"
           alt="robot"
-          className="w-96 h-auto  absolute"
+          className="w-96 h-auto absolute"
         />
       </div>
 
@@ -119,9 +152,11 @@ const Contact = () => {
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 xl:gap-0">
           {/* Left: Address */}
           <div className="space-y-10">
-            {contactDetails.filter(d => d.type === "location").map((item,i)=>(
+            {contactDetails.filter((d) => d.type === "location").map((item, i) => (
               <div key={i} className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-white mt-1 flex-shrink-0">{getIcon(item.type, {className:"w-6 h-6"})}</div>
+                <div className="p-3 rounded-full bg-white mt-1 flex-shrink-0">
+                  {getIcon(item.type, { className: "w-6 h-6" })}
+                </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-300">{item.title}</h4>
                   <p className="text-gray-400">{item.value}</p>
@@ -132,44 +167,75 @@ const Contact = () => {
 
           {/* Middle: Phone & Email */}
           <div className="space-y-10">
-            {contactDetails.filter(d => d.type === "phone" || d.type === "email").map((item,i)=>(
+            {contactDetails.filter((d) => d.type === "phone" || d.type === "email").map((item, i) => (
               <div key={i} className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-white mt-1 flex-shrink-0">{getIcon(item.type, {className:"w-6 h-6"})}</div>
+                <div className="p-3 rounded-full bg-white mt-1 flex-shrink-0">
+                  {getIcon(item.type, { className: "w-6 h-6" })}
+                </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-300">{item.title}</h4>
-                  <a href={item.type==="phone"?`tel:${item.value}`:`mailto:${item.value}`} className="text-gray-400 hover:text-green-400 transition">{item.value}</a>
+                  <a
+                    href={item.type === "phone" ? `tel:${item.value}` : `mailto:${item.value}`}
+                    className="text-gray-400 hover:text-green-400 transition"
+                  >
+                    {item.value}
+                  </a>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Right: Form */}
-          <motion.div className="p-8 2xl:p-24 xl:p-10 lg:p-20 rounded-3xl bg-green-950/70 backdrop-blur-sm shadow-2xl border border-indigo-900/50 2xl:mt-[-13.50rem] xl:mt-[-14rem] lg:mt-[3rem] md:mt-[3rem] mt-[2rem]"
-            variants={formVariant} initial="hidden" whileInView="visible" viewport={{once:true}}>
+          <motion.div
+            className="p-8 2xl:p-24 xl:p-10 lg:p-20 rounded-3xl bg-green-950/70 backdrop-blur-sm shadow-2xl border border-indigo-900/50 2xl:mt-[-13.5rem] xl:mt-[-14rem] lg:mt-[3rem] md:mt-[3rem] mt-[2rem]"
+            variants={formVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             <h3 className="text-2xl md:text-3xl font-bold mb-8">Your Details</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-1">
                   <label className="text-sm md:text-base text-gray-300">Name *</label>
-                  <input type="text" name="name" className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg"/>
+                  <input
+                    type="text"
+                    name="name"
+                    className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg"
+                  />
                 </div>
                 <div className="space-y-1">
                   <label className="text-sm md:text-base text-gray-300">Email *</label>
-                  <input type="email" name="email" className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg"/>
+                  <input
+                    type="email"
+                    name="email"
+                    className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg"
+                  />
                 </div>
               </div>
 
               <div className="space-y-1">
                 <label className="text-sm md:text-base text-gray-300">Subject *</label>
-                <input type="text" name="subject" className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg"/>
+                <input
+                  type="text"
+                  name="subject"
+                  className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg"
+                />
               </div>
 
               <div className="space-y-1">
                 <label className="text-sm md:text-base text-gray-300">Comments / Questions *</label>
-                <textarea name="message" rows="4" className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg resize-none"/>
+                <textarea
+                  name="message"
+                  rows="4"
+                  className="w-full bg-transparent border-b border-green-400 focus:border-indigo-400 py-2 text-white text-base md:text-lg resize-none"
+                />
               </div>
 
-              <button type="submit" className="w-full px-6 py-3 text-lg md:text-xl font-semibold rounded-xl bg-green-600 hover:bg-green-700 transition cursor-pointer">
+              <button
+                type="submit"
+                className="w-full px-6 py-3 text-lg md:text-xl font-semibold rounded-xl bg-green-600 hover:bg-green-700 transition cursor-pointer"
+              >
                 Send Message
               </button>
             </form>
@@ -178,14 +244,25 @@ const Contact = () => {
       </div>
 
       {/* Map */}
-      <motion.div className="relative w-full h-[34.375rem] lg:h-[31.25rem] mt-[-9.375rem] z-10 overflow-hidden shadow-2xl"
-        initial={{ opacity:0, y:50, scale:0.9 }} whileInView={{opacity:1, y:0, scale:1}} transition={{duration:0.8, ease:"easeOut"}} viewport={{once:true}}>
+      <motion.div
+        className="relative w-full h-[34.375rem] lg:h-[31.25rem] mt-[-9.375rem] z-10 overflow-hidden shadow-2xl"
+        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
         <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent blur-3xl animate-pulse"></div>
-        <iframe src="https://maps.google.com/maps?q=Jl.%20Raya%20Kampus%20Unud%2C%20Jimbaran%2C%20Bali%20-%2080361&t=&z=15&ie=UTF8&iwloc=&output=embed" title="Map" className="relative w-full h-full border-0 grayscale transition duration-700 ease-in-out" allowFullScreen loading="lazy"/>
+        <iframe
+          src="https://maps.google.com/maps?q=Jl.%20Raya%20Kampus%20Unud%2C%20Jimbaran%2C%20Bali%20-%2080361&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          title="Map"
+          className="relative w-full h-full border-0 grayscale transition duration-700 ease-in-out"
+          allowFullScreen
+          loading="lazy"
+        />
         <div className="absolute inset-0 bg-black/20"></div>
       </motion.div>
 
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar/>
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar />
     </section>
   );
 };
