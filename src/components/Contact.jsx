@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"; // 👈 added
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"; 
 
 gsap.registerPlugin(MotionPathPlugin, ScrambleTextPlugin);
 
@@ -53,7 +53,7 @@ const formVariant = {
 
 const Contact = () => {
   const imageRef = useRef(null);
-  const textRef = useRef(null); // 👈 for scramble
+  const textRef = useRef(null); 
   const gsapCtx = useRef(null);
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const Contact = () => {
           }
         });
       },
-      { threshold: 0.5 } // trigger when 50% of the element is visible
+      { threshold: 0.5 } 
     );
     if (textRef.current) observer.observe(textRef.current);
 
@@ -318,12 +318,12 @@ const Contact = () => {
 
       {/* Map */}
       <motion.div
-        className="relative w-full h-[34.375rem] lg:h-[31.25rem] mt-[-9.375rem] z-10 overflow-hidden shadow-2xl"
+        className="relative w-full h-[34.375rem] lg:h-[31.25rem] mt-[-9.375rem] z-10 overflow-hidden shadow-2xl will-change-[opacity,transform]"
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
-        style={{ willChange: "opacity, transform" }}
+        
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-green-500/20 to-transparent blur-3xl animate-pulse"></div>
         <iframe
