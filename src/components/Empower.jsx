@@ -68,7 +68,10 @@ const Empower = () => {
 
     const resize = () => {
       dpr = Math.max(1, window.devicePixelRatio || 1);
-      w = canvas.clientWidth || canvas.parentElement.clientWidth || window.innerWidth;
+      w =
+        canvas.clientWidth ||
+        canvas.parentElement.clientWidth ||
+        window.innerWidth;
       h = canvas.clientHeight || canvas.parentElement.clientHeight || 200;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
@@ -99,7 +102,9 @@ const Empower = () => {
     };
 
     const initParticles = () => {
-      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, (_, i) => createParticle(i));
+      particlesRef.current = Array.from({ length: PARTICLE_COUNT }, (_, i) =>
+        createParticle(i)
+      );
     };
 
     let last = performance.now();
@@ -120,11 +125,16 @@ const Empower = () => {
           p.rotation += p.vRot * dt;
 
           if (p.age < 0.6) p.alpha = Math.min(1, p.alpha + dt * 2);
-          else if (p.age > p.life - 1.6) p.alpha = Math.max(0, p.alpha - dt * 0.6);
+          else if (p.age > p.life - 1.6)
+            p.alpha = Math.max(0, p.alpha - dt * 0.6);
           else p.alpha = Math.min(1, p.alpha + dt * 0.2);
         }
 
-        if (p.x + p.size > -50 && p.x - p.size < w + 50 && p.y - p.size < h + 200) {
+        if (
+          p.x + p.size > -50 &&
+          p.x - p.size < w + 50 &&
+          p.y - p.size < h + 200
+        ) {
           ctx.save();
           ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
           ctx.translate(p.x, p.y);
@@ -133,7 +143,12 @@ const Empower = () => {
           ctx.restore();
         }
 
-        if (p.y - p.size > h + 200 || p.x < -200 || p.x > w + 200 || p.age > p.life + 2) {
+        if (
+          p.y - p.size > h + 200 ||
+          p.x < -200 ||
+          p.x > w + 200 ||
+          p.age > p.life + 2
+        ) {
           const newP = createParticle(p.index);
           newP.x = rand(0.05 * w, 0.95 * w);
           newP.y = h + rand(0, h * 0.6);
@@ -191,7 +206,9 @@ const Empower = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           EmpowerAI <span className="text-black">Building</span>{" "}
-          <span className="text-gray-500 font-light">Inclusive Communities</span>{" "}
+          <span className="text-gray-500 font-light">
+            Inclusive Communities
+          </span>{" "}
           <span className="text-black">with AI</span>
         </motion.h2>
       </header>
@@ -201,8 +218,13 @@ const Empower = () => {
         {/* Left Panel */}
         <aside className="bg-[#65D800] text-white rounded-3xl p-8 md:p-10 flex flex-col items-center justify-center">
           {["Productivity", "Automation", "Innovation"].map((text, idx) => (
-            <div key={idx} className="flex flex-col items-center mb-10 last:mb-0 text-center">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">{text}</h3>
+            <div
+              key={idx}
+              className="flex flex-col items-center mb-10 last:mb-0 text-center"
+            >
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">
+                {text}
+              </h3>
               <div className="w-12 h-12 bg-white text-[#65D800] flex items-center justify-center rounded-full text-2xl font-bold">
                 ↓
               </div>
@@ -219,12 +241,23 @@ const Empower = () => {
           variants={cardVariant}
         >
           {[
-            { title: "Introduction to Artificial Intelligence", desc: "Futuristic tech fonts, dark background with neon accents (blue/purple)" },
-            { title: "Applications of AI", desc: "Healthcare, finance, automation, and sustainability initiatives" },
-            { title: "AI & Human Collaboration", desc: "Creating solutions that are inclusive, ethical, and community-driven" },
+            {
+              title: "Introduction to Artificial Intelligence",
+              desc: "Futuristic tech fonts, dark background with neon accents (blue/purple)",
+            },
+            {
+              title: "Applications of AI",
+              desc: "Healthcare, finance, automation, and sustainability initiatives",
+            },
+            {
+              title: "AI & Human Collaboration",
+              desc: "Creating solutions that are inclusive, ethical, and community-driven",
+            },
           ].map((item, idx) => (
             <div key={idx} className="flex flex-col gap-2">
-              <h3 className="text-lg md:text-2xl font-semibold text-gray-900">{item.title}</h3>
+              <h3 className="text-lg md:text-2xl font-semibold text-gray-900">
+                {item.title}
+              </h3>
               <p className="text-sm md:text-base text-gray-600">{item.desc}</p>
               <div className="w-16 h-1 bg-[#65D800] mt-1"></div>
             </div>
@@ -233,7 +266,7 @@ const Empower = () => {
 
         {/* Right Card */}
         <motion.figure
-          className="relative rounded-3xl overflow-hidden h-[220px] sm:h-[280px] md:h-[320px] lg:h-auto group"
+          className="relative rounded-3xl overflow-hidden h-[13.75rem] sm:h-[17.5rem] md:h-[20rem] lg:h-auto group"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -251,11 +284,17 @@ const Empower = () => {
             <div className="w-0 shrink-0 bg-white/30 backdrop-blur-md h-full transition-all duration-500 ease-out group-hover:w-1/2"></div>
           </div>
           <figcaption className="absolute inset-0 flex items-center justify-center px-6 text-white text-center z-10">
-            <h3 className="text-5xl sm:text-6xl md:text-7xl font-black text-[#65D800] leading-none pr-3">&</h3>
+            <h3 className="text-5xl sm:text-6xl md:text-7xl font-black text-[#65D800] leading-none pr-3">
+              &
+            </h3>
             <div className="flex flex-col items-start">
-              <h4 className="text-xl sm:text-2xl font-bold text-[#65D800]">Accessibility</h4>
+              <h4 className="text-xl sm:text-2xl font-bold text-[#65D800]">
+                Accessibility
+              </h4>
               <div className="flex items-center space-x-2">
-                <span className="text-sm sm:text-base tracking-wide text-white/90">Inclusion</span>
+                <span className="text-sm sm:text-base tracking-wide text-white/90">
+                  Inclusion
+                </span>
                 <div className="w-8 sm:w-10 h-0.5 bg-white"></div>
               </div>
             </div>
@@ -267,7 +306,10 @@ const Empower = () => {
       <div className="relative px-4 md:px-12 grid grid-cols-1 lg:grid-cols-3 gap-10 items-center w-full">
         {/* Particle Canvas */}
         <div className="absolute bottom-0 left-0 w-full h-64 pointer-events-none z-0">
-          <canvas ref={canvasRef} className="w-full h-full" style={{ willChange: "transform, opacity" }} />
+          <canvas
+            ref={canvasRef}
+            className="w-full h-full will-change-transform will-change-opacity"
+          />
         </div>
 
         {/* Heading */}
