@@ -45,7 +45,7 @@ const pricingPlans = [
     name: "Premium",
     price: "$968",
     colorClass: "bg-[#65D800] text-white",
-    icon: "/basic.png", // Assuming the same icon as basic, change if needed
+    icon: "/basic.png", 
     reviewIcon: "/review.png",
   },
 ];
