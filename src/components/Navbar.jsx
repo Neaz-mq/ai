@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-scroll";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,7 +80,7 @@ const Navbar = () => {
           {/* Contact Button (desktop only) */}
           <div className="hidden lg:flex absolute right-6">
             <Link
-              to="contact" 
+              to="contact"
               smooth={true}
               offset={-80}
               duration={500}
@@ -135,73 +136,71 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile/Tablet Dropdown Menu */}
-        <div
-          className={`w-full max-w-6xl flex-col items-center bg-white shadow-md rounded-xl mt-4 p-4 lg:hidden ${
-            isMenuOpen ? "flex" : "hidden"
-          }`}
-        >
-          <Link
-            to="home"
-            smooth={true}
-            offset={-80}
-            duration={500}
-            onClick={() => setIsMenuOpen(false)}
-            className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
-          >
-            Home
-          </Link>
-          <Link
-            to="benefits"
-            smooth={true}
-            offset={-80}
-            duration={500}
-            onClick={() => setIsMenuOpen(false)}
-            className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
-          >
-            Benefits
-          </Link>
-          <Link
-            to="works"
-            smooth={true}
-            offset={-80}
-            duration={500}
-            onClick={() => setIsMenuOpen(false)}
-            className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
-          >
-            How It Works
-          </Link>
-          <Link
-            to="empowerai"
-            smooth={true}
-            offset={-80}
-            duration={500}
-            onClick={() => setIsMenuOpen(false)}
-            className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
-          >
-            EmpowerAI
-          </Link>
-          <Link
-            to="integration"
-            smooth={true}
-            offset={-80}
-            duration={500}
-            onClick={() => setIsMenuOpen(false)}
-            className="w-full text-center py-2 text-gray-800 hover:text-[#65D800] rounded-lg cursor-pointer transition-colors duration-200"
-          >
-            Integration
-          </Link>
-          {/* Smaller Contact button */}
-          <Link
-            to="contact" 
-            smooth={true}
-            offset={-80}
-            duration={500}
-            onClick={() => setIsMenuOpen(false)}
-            className="w-auto mt-4 px-8 py-2 bg-[#65D800] text-white font-semibold rounded-full shadow-lg transition-colors duration-200 cursor-pointer text-center"
-          >
-            Contact
-          </Link>
-        </div>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="w-full max-w-6xl flex flex-col items-center backdrop-blur-md bg-white/90 shadow-xl rounded-2xl mt-0 lg:hidden"
+              style={{
+                paddingTop: "2rem",
+                paddingBottom: "2rem",
+                paddingLeft: "1.25rem",
+                paddingRight: "1.25rem",
+              }} // equal top/bottom padding
+            >
+              <div className="flex flex-col w-full space-y-1">
+                {[
+                  { to: "home", label: "Home" },
+                  { to: "benefits", label: "Benefits" },
+                  { to: "works", label: "How It Works" },
+                  { to: "empowerai", label: "EmpowerAI" },
+                  { to: "integration", label: "Integration" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08, duration: 0.25 }}
+                    className="w-full"
+                  >
+                    <Link
+                      to={item.to}
+                      smooth={true}
+                      offset={-80}
+                      duration={500}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block w-full text-center py-2 text-base font-medium text-gray-700 hover:text-[#65D800] hover:bg-gray-100/60 rounded-lg cursor-pointer transition-all duration-300"
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Contact Button at same distance from bottom as Home from top */}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.25 }}
+                className="mt-6 mb-3"
+              >
+                <Link
+                  to="contact"
+                  smooth={true}
+                  offset={-80}
+                  duration={500}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-auto mt-4 px-8 py-3 bg-gradient-to-r from-[#65D800] to-green-500 text-white font-semibold rounded-full shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer text-center"
+                >
+                  Contact
+                </Link>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
