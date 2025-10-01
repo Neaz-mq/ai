@@ -16,7 +16,6 @@ const ScrollToTop = () => {
   }, []);
 
   const scrollToTop = () => {
-    // Use smooth native scrolling instead of creating a second Lenis instance
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
