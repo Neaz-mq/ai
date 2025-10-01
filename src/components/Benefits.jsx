@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Benefits = () => {
   const cardsWrapperRef = useRef(null);
-  const [imagesLoaded, setImagesLoaded] = useState(false); // NEW
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   const revealTimeoutRef = useRef(null);
 
   const images = useMemo(
@@ -28,7 +28,7 @@ const Benefits = () => {
     []
   );
 
-  // Preload images — set imagesLoaded when every image finishes loading
+  // Preload images
   useEffect(() => {
     let mounted = true;
     let loaded = 0;
@@ -39,15 +39,12 @@ const Benefits = () => {
       img.onload = () => {
         loaded++;
         if (mounted && loaded === images.length) {
-          // small timeout gives the browser a chance to paint decoded images
-          // before we run heavy layout/animation setup
           revealTimeoutRef.current = setTimeout(() => {
             setImagesLoaded(true);
           }, 40);
         }
       };
       img.onerror = () => {
-        // treat errored images as loaded to avoid blocking
         loaded++;
         if (mounted && loaded === images.length) {
           revealTimeoutRef.current = setTimeout(() => {
@@ -65,16 +62,17 @@ const Benefits = () => {
     };
   }, [images]);
 
-  // Main GSAP + ScrollTrigger logic (useLayoutEffect to avoid paint flicker)
+  // Main GSAP + ScrollTrigger logic
   useLayoutEffect(() => {
     if (!imagesLoaded) return;
-
-    // Hide wrapper until everything is set by GSAP to avoid flicker
     const wrapper = cardsWrapperRef.current;
     if (wrapper) wrapper.style.visibility = "hidden";
 
     const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".gallery-card", cardsWrapperRef.current);
+      const cards = gsap.utils.toArray(
+        ".gallery-card",
+        cardsWrapperRef.current
+      );
       const wrapperEl = cardsWrapperRef.current;
 
       if (!wrapperEl || cards.length === 0) {
@@ -82,10 +80,8 @@ const Benefits = () => {
         return;
       }
 
-      // Ensure wrapper is as tall as viewport (keeps pin behaviour stable)
       wrapperEl.style.minHeight = "100vh";
 
-      // Set initial styles (use transforms and autoAlpha for smoother GPU compositing)
       gsap.set(cards, {
         position: "absolute",
         top: 0,
@@ -111,7 +107,6 @@ const Benefits = () => {
         start: "top top",
         end: `+=${totalScroll}`,
         scrub: true,
-        // optimize by lowering priority of refresh when not necessary
         refreshPriority: -1,
       });
 
@@ -164,7 +159,6 @@ const Benefits = () => {
         ScrollTrigger.refresh(true);
       }, 60);
 
-      // Reveal wrapper now that GSAP has set initial styles
       if (wrapperEl) wrapperEl.style.visibility = "visible";
 
       return () => {
@@ -189,8 +183,8 @@ const Benefits = () => {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <h2 className="text-xl 2xl:text-5xl xl:text-3xl lg:text-3xl md:text-2xl font-light text-gray-700 leading-snug">
-          Entering <span className="text-black font-bold">New</span> Worlds Beyond{" "}
-          <span className="text-black font-bold">Imagination</span>
+          Entering <span className="text-black font-bold">New</span> Worlds
+          Beyond <span className="text-black font-bold">Imagination</span>
         </h2>
         <p className="mt-4 text-gray-500 text-sm md:text-base">
           Explore features that redefine virtual experiences.
@@ -199,31 +193,22 @@ const Benefits = () => {
 
       <div
         ref={cardsWrapperRef}
-        // keep overflow-hidden and height intact; visibility toggled via script to avoid flicker
         className="cards-wrapper relative h-[100vh] w-full overflow-hidden"
         aria-hidden={!imagesLoaded}
       >
         {images.map(({ src, alt }, index) => (
           <figure
             key={index}
-            className="gallery-card absolute inset-0 flex items-center justify-center w-full h-full"
-            // GPU hint & prevent accidental repaints
-            style={{
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-            }}
+            className="gallery-card absolute inset-0 flex items-center justify-center w-full h-full transform-gpu will-change-transform will-change-opacity"
           >
             <img
               src={src}
               alt={alt}
-              className="w-full h-full object-cover object-center"
-              // ensure browser decodes image async; we already preloaded so immediate paint will be ready
+              className="block w-full h-full object-cover object-center"
               decoding="async"
-              // do not lazy-load here to avoid surprise loads while scrolling
               loading="eager"
-              // small style hint to keep images from triggering layout shifts
-              style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }}
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent pointer-events-none"></div>
             <div className="absolute bottom-6 md:bottom-12 left-1/2 -translate-x-1/2 bg-black/50 px-4 md:px-6 py-2 md:py-3 rounded-xl text-white text-sm md:text-xl font-medium backdrop-blur-sm shadow-lg pointer-events-none">
               {alt}
