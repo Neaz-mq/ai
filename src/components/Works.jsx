@@ -13,17 +13,16 @@ const Works = () => {
       gsap.set(letters, {
         yPercent: 0,
         willChange: "transform",
-        transform: "translateZ(0)", // GPU acceleration
+        transform: "translateZ(0)", 
       });
 
-      // Timeline loop with GPU-friendly settings
       const tl = gsap.timeline({ repeat: -1, yoyo: true });
       tl.to(letters, {
         yPercent: 15,
         duration: 0.6,
         ease: "sine.inOut",
         stagger: { each: 0.04 },
-        force3D: true, // force GPU
+        force3D: true, 
       });
 
       return () => {
@@ -125,7 +124,7 @@ const Works = () => {
               </div>
               <div className="flex items-center gap-2 break-words">
                 <img src="/arrow.png" alt="" className="w-3 h-3 flex-shrink-0" />
-                Context-aware predictions
+                Autonomous decision-making
               </div>
             </div>
           </div>
