@@ -16,10 +16,8 @@ export default function App() {
   const lenisRef = useRef(null);
   const rafIdRef = useRef(null);
 
-  
   useEffect(() => {
     if (!loading) {
-      // Initialize Lenis only once
       if (!lenisRef.current) {
         lenisRef.current = new Lenis({
           duration: 0.8,
@@ -27,6 +25,7 @@ export default function App() {
           smooth: true,
         });
       }
+
       const raf = (time) => {
         if (lenisRef.current) {
           lenisRef.current.raf(time);
@@ -37,12 +36,10 @@ export default function App() {
       rafIdRef.current = requestAnimationFrame(raf);
 
       return () => {
-        if (rafIdRef.current) {
-          cancelAnimationFrame(rafIdRef.current);
-        }
+        if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
         if (lenisRef.current) {
           lenisRef.current.destroy();
-          lenisRef.current = null; // reset ref to avoid duplicates
+          lenisRef.current = null;
         }
       };
     }
@@ -55,16 +52,26 @@ export default function App() {
       ) : (
         <div className="relative">
           <Navbar />
-          <main>
-            <Hero />
-            <Benefits />
-            <Works />
-            <Empower />
-            <Integration />
-            <Contact />
-          </main>
+
+          {/* Wrapper to handle sticky footer reveal */}
+          <div className="relative min-h-screen">
+            {/* Main content */}
+            <main className="relative z-10 bg-white">
+              <Hero />
+              <Benefits />
+              <Works />
+              <Empower />
+              <Integration />
+              <Contact />
+            </main>
+
+            {/* Sticky Footer Reveal */}
+            <div className="relative">
+              <Footer />
+            </div>
+          </div>
+
           <ScrollToTop />
-          <Footer />
         </div>
       )}
     </>
